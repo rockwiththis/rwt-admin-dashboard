@@ -1,0 +1,18 @@
+.cardGrid {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.cardGrid__card {
+  display: inline-block;
+  cursor: pointer;
+
+  &:hover {
+    position: relative;
+    bottom: 1px;
+    transition: bottom 0.1s ease;
+  }
+}

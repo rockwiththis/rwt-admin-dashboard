@@ -13,7 +13,6 @@ const columns = [
   {
     Header: 'Name',
     accessor: 'name',
-    // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
   },
 ]
 

@@ -4350,8 +4350,7 @@ var columns = [{
   maxWidth: 50
 }, {
   Header: 'Name',
-  accessor: 'name' // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-
+  accessor: 'name'
 }];
 
 var UsersPage =
@@ -4425,7 +4424,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 36
+          lineNumber: 35
         },
         __self: this
       }, isLoaded ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_table__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -4435,7 +4434,7 @@ function (_Component) {
         className: "-striped -highlight",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 39
+          lineNumber: 38
         },
         __self: this
       }) : 'loading...');
@@ -4468,7 +4467,7 @@ function (_Component) {
 
 /***/ }),
 
-/***/ 8:
+/***/ 11:
 /*!******************************!*\
   !*** multi ./pages/users.js ***!
   \******************************/
@@ -4493,5 +4492,5 @@ module.exports = dll_ecba6b44147cc8018369;
 
 /***/ })
 
-},[[8,"static/runtime/webpack.js"]]]));;
+},[[11,"static/runtime/webpack.js"]]]));;
 //# sourceMappingURL=users.js.map

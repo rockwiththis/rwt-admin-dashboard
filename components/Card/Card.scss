@@ -4,6 +4,7 @@
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
   width: 350px;
   min-height: 350px;
+  margin: 12px;
 }
 
 .card__content {
@@ -11,6 +12,11 @@
   flex-flow: column nowrap;
   align-items: flex-start;
   justify-content: flex-start;
+}
+
+.card__image {
+  height: 250px;
+  overflow: hidden;
 }
 
 .card__content__text {
@@ -22,8 +28,8 @@
 }
 
 .card__content__text__title {
-  font-size: 20px;
-  margin-bottom: 16px;
+  font-size: 30px;
+  margin-bottom: 12px;
 }
 
 .card__content__text__description {

@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -164,8 +164,7 @@ var columns = [{
   maxWidth: 50
 }, {
   Header: 'Name',
-  accessor: 'name' // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-
+  accessor: 'name'
 }];
 
 var UsersPage =
@@ -239,7 +238,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 36
+          lineNumber: 35
         },
         __self: this
       }, isLoaded ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_table__WEBPACK_IMPORTED_MODULE_3___default.a, {
@@ -249,7 +248,7 @@ function (_Component) {
         className: "-striped -highlight",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 39
+          lineNumber: 38
         },
         __self: this
       }) : 'loading...');
@@ -263,7 +262,7 @@ function (_Component) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!******************************!*\
   !*** multi ./pages/users.js ***!
   \******************************/
