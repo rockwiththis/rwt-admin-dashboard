@@ -27,6 +27,14 @@ const Home = () => {
   return (
     <div>
       <CardGrid cardsList={cardsList} />
+      <div style={{ marginTop: 50 }}>
+        {'TODO:'}
+        <ul>
+          <li>{'get upload working'}</li>
+          <li>{'setup auth wrapper'}</li>
+          <li>{'improve songs table'}</li>
+        </ul>
+      </div>
     </div>
   );
 }
