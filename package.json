@@ -1,0 +1,29 @@
+{
+  "name": "rock-with-this-admin",
+  "version": "1.0.0",
+  "description": "RockWithThis admin dashboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rockwiththis/rwt-admin-dashboard.git"
+  },
+  "author": "josephwilliams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rockwiththis/rwt-admin-dashboard/issues"
+  },
+  "homepage": "https://github.com/rockwiththis/rwt-admin-dashboard#readme",
+  "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "next": "^7.0.2",
+    "node-sass": "^4.10.0",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1"
+  }
+}
