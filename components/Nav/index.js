@@ -22,17 +22,21 @@ const navLinks = [
 const Nav = () => {
   return (
     <nav className={'nav'}>
-      <div className={'nav__logo'}>
-        {'RockWithThis'}
-      </div>
-      <div className={'nav__links'}>
-        {navLinks.map(({ title, url }) => (
-          <Link href={url} key={url}>
-            <a className={'nav__link'}>
-              {title}
-            </a>
-          </Link>
-        ))}
+      <div className={'nav__content'}>
+        <Link href={'/'}>
+          <div className={'nav__logo'}>
+            {'RockWithThis'}
+          </div>
+        </Link>
+        <div className={'nav__links'}>
+          {navLinks.map(({ title, url }) => (
+            <Link href={url} key={url}>
+              <a className={'nav__link'}>
+                {title}
+              </a>
+            </Link>
+          ))}
+        </div>
       </div>
     </nav>
   )

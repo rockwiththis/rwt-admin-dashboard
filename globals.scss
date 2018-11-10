@@ -1,6 +1,4 @@
-@import '~react-md/src/scss/react-md';
+$primary-color: #3939ab;
+$secondary-color: #2342af;
 
-// Any variable overrides. The following just changes the default theme to use teal and purple.
-$md-primary-color: $md-teal-500;
-$md-secondary-color: $md-purple-a-400;
-$md-light-theme: false; // setting to false in v2 since the default background is dark
+$navbar-height: 60px;

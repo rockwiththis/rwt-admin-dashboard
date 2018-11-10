@@ -3,6 +3,8 @@ import App, { Container } from 'next/app'
 import Meta from '../components/Meta'
 import Layout from '../components/Layout'
 
+import '../index.scss'
+
 
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {

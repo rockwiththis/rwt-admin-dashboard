@@ -17,11 +17,11 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/index": [
+    "/songs": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/": [
+    "/users": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ]
