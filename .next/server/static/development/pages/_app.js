@@ -232,14 +232,14 @@ var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/componen
 
 
 var navLinks = [{
-  title: 'Upload',
-  url: '/upload'
-}, {
   title: 'Songs',
   url: '/songs'
 }, {
   title: 'Users',
   url: '/users'
+}, {
+  title: 'Upload',
+  url: '/upload'
 }];
 
 var Nav = function Nav() {

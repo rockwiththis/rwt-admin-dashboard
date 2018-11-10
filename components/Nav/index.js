@@ -6,16 +6,16 @@ import './Nav.scss'
 
 const navLinks = [
   {
-    title: 'Upload',
-    url: '/upload',
-  },
-  {
     title: 'Songs',
     url: '/songs',
   },
   {
     title: 'Users',
     url: '/users',
+  },
+  {
+    title: 'Upload',
+    url: '/upload',
   },
 ]
 

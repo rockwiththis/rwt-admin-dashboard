@@ -20,10 +20,13 @@
   },
   "homepage": "https://github.com/rockwiththis/rwt-admin-dashboard#readme",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^7.0.2",
     "node-sass": "^4.10.0",
     "react": "^16.6.1",
-    "react-dom": "^16.6.1"
+    "react-dom": "^16.6.1",
+    "react-table": "^6.8.6"
   }
 }

@@ -49,10 +49,10 @@
       "publicPath": "static/chunks/styles.js"
     }
   ],
-  "./Card.scss": [
+  "react-table/react-table.css": [
     {
-      "id": "./components/Card/Card.scss",
-      "name": "./components/Card/Card.scss",
+      "id": "./node_modules/react-table/react-table.css",
+      "name": "./node_modules/react-table/react-table.css",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }
