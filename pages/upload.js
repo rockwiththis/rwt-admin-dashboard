@@ -1,8 +1,10 @@
 import React from 'react'
 
 
-export default () => (
+const Upload = () => (
   <div>
     {'upload'}
   </div>
-);
+)
+
+export default Upload

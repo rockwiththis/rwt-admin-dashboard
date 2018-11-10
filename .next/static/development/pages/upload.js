@@ -59,7 +59,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/pages/upload.js";
 
-/* harmony default export */ __webpack_exports__["default"] = (function () {
+
+var Upload = function Upload() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     __source: {
       fileName: _jsxFileName,
@@ -67,7 +68,9 @@ var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/pages/up
     },
     __self: this
   }, 'upload');
-});
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Upload);
     (function (Component, route) {
       if(!Component) return
       if (false) {}
@@ -90,7 +93,7 @@ var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/pages/up
 
 /***/ }),
 
-/***/ 7:
+/***/ 9:
 /*!*******************************!*\
   !*** multi ./pages/upload.js ***!
   \*******************************/
@@ -115,5 +118,5 @@ module.exports = dll_ecba6b44147cc8018369;
 
 /***/ })
 
-},[[7,"static/runtime/webpack.js"]]]));;
+},[[9,"static/runtime/webpack.js"]]]));;
 //# sourceMappingURL=upload.js.map

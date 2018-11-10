@@ -1,5 +1,13 @@
 import React from 'react'
+import Card from '../components/Card'
 
-export default () => (
-  <div>Welcome to next.js!</div>
-);
+
+const Home = () => {
+  return (
+    <div>
+      {"admin dashboard landing"}
+    </div>
+  );
+}
+
+export default Home
