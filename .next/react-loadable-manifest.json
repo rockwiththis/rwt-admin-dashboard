@@ -1,37 +1,21 @@
 {
-  "./Card.scss": [
+  "./Nav.scss": [
     {
-      "id": "./components/Card/Card.scss",
-      "name": "./components/Card/Card.scss",
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    }
-  ],
-  "./CardGrid.scss": [
-    {
-      "id": "./components/CardGrid/CardGrid.scss",
-      "name": "./components/CardGrid/CardGrid.scss",
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    }
-  ],
-  "./Layout.scss": [
-    {
-      "id": "./components/Layout/Layout.scss",
-      "name": "./components/Layout/Layout.scss",
+      "id": "./components/Nav/Nav.scss",
+      "name": "./components/Nav/Nav.scss",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }
   ],
   "undefined": [
     {
-      "id": 3,
+      "id": 2,
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     },
     {
-      "id": 8,
+      "id": 3,
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
@@ -43,28 +27,16 @@
       "publicPath": "static/chunks/styles.js"
     },
     {
-      "id": 2,
-      "name": null,
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    },
-    {
       "id": 7,
-      "name": null,
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    },
-    {
-      "id": 10,
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }
   ],
-  "./Nav.scss": [
+  "./Layout.scss": [
     {
-      "id": "./components/Nav/Nav.scss",
-      "name": "./components/Nav/Nav.scss",
+      "id": "./components/Layout/Layout.scss",
+      "name": "./components/Layout/Layout.scss",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }
