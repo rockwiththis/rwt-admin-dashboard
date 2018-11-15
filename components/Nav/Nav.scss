@@ -7,7 +7,7 @@
   width: 100%;
   height: 60px;
 
-  background: $primary-color;
+  background: linear-gradient(0.25turn, #1e0c49, #1a6ea9, #0097d5);;
   box-shadow: 1px 3px 1px #5a59594f;
 }
 
@@ -21,7 +21,8 @@
 }
 
 .nav__logo {
-  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 28px;
   color: #ffffff;
   cursor: pointer;
 }

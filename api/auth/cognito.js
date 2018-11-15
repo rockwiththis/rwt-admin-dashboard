@@ -2,6 +2,7 @@ import {
   CognitoUserPool,
   AuthenticationDetails,
   CognitoUser,
+  // CognitoUserAttribute,
 } from 'amazon-cognito-identity-js';
 
 import config from './config.js';

@@ -92,6 +92,14 @@ var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/componen
       lineNumber: 8
     },
     __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("link", {
+    href: "https://fonts.googleapis.com/css?family=Open+Sans|Roboto:500",
+    rel: "stylesheet",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 9
+    },
+    __self: this
   })));
 });
 

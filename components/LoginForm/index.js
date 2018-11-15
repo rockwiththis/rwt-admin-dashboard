@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 
 class LoginForm extends Component {
@@ -27,7 +27,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div onKeyPress={this._onKeyPress}>
+      <div className={'loginForm__wrapper'} onKeyPress={this._onKeyPress}>
         {'login'}
         <input
           onChange={(username) => this._handleInputChange({ username: username })}

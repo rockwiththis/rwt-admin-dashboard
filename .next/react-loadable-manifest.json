@@ -31,6 +31,34 @@
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
+    },
+    {
+      "id": 10,
+      "name": null,
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    },
+    {
+      "id": 11,
+      "name": null,
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    }
+  ],
+  "../index.scss": [
+    {
+      "id": "./index.scss",
+      "name": "./index.scss",
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    }
+  ],
+  "./Card.scss": [
+    {
+      "id": "./components/Card/Card.scss",
+      "name": "./components/Card/Card.scss",
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
     }
   ],
   "./Layout.scss": [
@@ -41,10 +69,10 @@
       "publicPath": "static/chunks/styles.js"
     }
   ],
-  "../index.scss": [
+  "./CardGrid.scss": [
     {
-      "id": "./index.scss",
-      "name": "./index.scss",
+      "id": "./components/CardGrid/CardGrid.scss",
+      "name": "./components/CardGrid/CardGrid.scss",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }
