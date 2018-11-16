@@ -1,6 +1,6 @@
 /* eslint no-console:0, no-param-reassign:0 */
 
-import { invokeApiGateway } from 'utils/aws';
+// import { invokeApiGateway } from 'utils/aws';
 
 const oneHour = 1000 * 60 * 60;
 
@@ -14,7 +14,7 @@ const oneHour = 1000 * 60 * 60;
  * @exports RequestTracker
  */
 export class RequestTracker {
-  constructor (trackerObj = window.trackedRequests, makeRequest = invokeApiGateway) {
+  constructor (trackerObj = window.trackedRequests, makeRequest = null /* invokeApiGateway */) {
     this.trackerObj = window.trackedRequests = trackerObj || {};
     this.makeRequest = makeRequest;
   }

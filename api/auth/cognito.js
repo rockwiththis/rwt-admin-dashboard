@@ -2,11 +2,11 @@ import {
   CognitoUserPool,
   AuthenticationDetails,
   CognitoUser,
-  // CognitoUserAttribute,
+  CognitoUserAttribute,
 } from 'amazon-cognito-identity-js';
 
 import config from './config.js';
-import tracker from './RequestTracker.js';
+// import tracker from './RequestTracker.js';
 
 const userPool = new CognitoUserPool({
   UserPoolId: config.cognito.USER_POOL_ID,
@@ -14,6 +14,27 @@ const userPool = new CognitoUserPool({
 });
 
 // HELPERS
+
+export function signUpNewUser({ username, email, password }) {
+  const authenticationData = { Username: username, Password: password }
+  const attributeList = []
+  const dataEmail = {
+    Name : 'email',
+    Value : email
+  }
+  const attributeEmail = new CognitoUserAttribute(dataEmail)
+  attributeList.push(attributeEmail)
+
+  userPool.signUp('username', 'password', attributeList, null, function(err, result){
+    if (err) {
+      alert(err.message || JSON.stringify(err))
+      return
+    }
+    cognitoUser = result.user
+    console.log('user name is ' + cognitoUser.getUsername())
+  });
+}
+
 
 /**
  * Signs in a user from authentication data, and returns a user token.
@@ -29,8 +50,11 @@ function createUserToken(username, password) {
 
   return new Promise((resolve, reject) => (
     user.authenticateUser(authenticationDetails, {
-      onSuccess: (result) => resolve(result.getIdToken().getJwtToken()),
-      onFailure: (err) => reject(err)
+      onSuccess: (result) => {
+        console.log('> createUserToken SUCCESS', result)
+        resolve(result.getIdToken().getJwtToken())
+      },
+      onFailure: (err) => reject('> createUserToken', err)
     })
   ));
 }
@@ -62,15 +86,16 @@ function getUserToken(currentUser) {
  * @param      {function}  onError  Callback run on error
  * @return     {Promise}   Promise which resolves to user data
  */
-export async function getUserData (onError = (error) => { throw new Error(error); }) {
+export async function getUserData(onError = (error) => { throw new Error(error); }) {
   const currentUser = userPool.getCurrentUser();
   if (!currentUser) return null;
 
   try {
     const token = await getUserToken(currentUser);
-    const response = await tracker.requestIfHaventAlready({
-      path: `/current-user`
-    }, token);
+    // const response = await tracker.requestIfHaventAlready({
+    //   path: `/current-user`
+    // }, token);
+    const response = null;
 
     return Object.assign(response || {}, { token });
   } catch (error) {
@@ -83,7 +108,7 @@ export async function getUserData (onError = (error) => { throw new Error(error)
  * Grabs current user from session and signs them out.
  * @param {Function} onSignOut Callback run on signout success
  */
-export function signOut (onSignOut) {
+export function signOut(onSignOut) {
   const currentUser = userPool.getCurrentUser();
   if (currentUser !== null) {
     currentUser.signOut();
@@ -99,10 +124,15 @@ export function signOut (onSignOut) {
  * @param      {string}    password   The password
  * @param      {Function}  onSuccess  Callback run on signin success
  */
-export async function signIn (username, password, onSuccess) {
-  await createUserToken(username, password);
-  const data = await getUserData();
-  if (onSuccess) { onSuccess(data); }
+export async function signIn(username, password, onSuccess) {
+  try {
+    await createUserToken(username, password);
+    const data = await getUserData();
+    if (onSuccess) { onSuccess(data); }
+  }
+  catch(error) {
+    console.log('>>> signIn error: ', error)
+  }
 }
 
 /**
@@ -111,7 +141,7 @@ export async function signIn (username, password, onSuccess) {
  * @param      {string}   username  The username
  * @return     {Promise}  { description_of_the_return_value }
  */
-export async function forgotPassword (username, onError, onVerify, onSuccess) {
+export async function forgotPassword(username, onError, onVerify, onSuccess) {
   const params = {
     Pool: userPool,
     Username: username
@@ -135,7 +165,7 @@ export async function forgotPassword (username, onError, onVerify, onSuccess) {
  * @param      {Function}  onError      On error
  * @param      {Function}  onSuccess    On success
  */
-export function resetPassword (username, code, newPassword, onError, onSuccess) {
+export function resetPassword(username, code, newPassword, onError, onSuccess) {
   const params = {
     Pool: userPool,
     Username: username

@@ -1,4 +1,12 @@
 {
+  "./noop": [
+    {
+      "id": "./node_modules/next/dist/client/noop.js",
+      "name": "./node_modules/next/dist/client/noop.js",
+      "file": "static/chunks/0.js",
+      "publicPath": "static/chunks/0.js"
+    }
+  ],
   "./Nav.scss": [
     {
       "id": "./components/Nav/Nav.scss",
@@ -25,40 +33,6 @@
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
-    },
-    {
-      "id": 7,
-      "name": null,
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    },
-    {
-      "id": 10,
-      "name": null,
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    },
-    {
-      "id": 11,
-      "name": null,
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    }
-  ],
-  "../index.scss": [
-    {
-      "id": "./index.scss",
-      "name": "./index.scss",
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    }
-  ],
-  "./Card.scss": [
-    {
-      "id": "./components/Card/Card.scss",
-      "name": "./components/Card/Card.scss",
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
     }
   ],
   "./Layout.scss": [
@@ -69,28 +43,12 @@
       "publicPath": "static/chunks/styles.js"
     }
   ],
-  "./CardGrid.scss": [
+  "../index.scss": [
     {
-      "id": "./components/CardGrid/CardGrid.scss",
-      "name": "./components/CardGrid/CardGrid.scss",
+      "id": "./index.scss",
+      "name": "./index.scss",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
-    }
-  ],
-  "react-table/react-table.css": [
-    {
-      "id": "./node_modules/react-table/react-table.css",
-      "name": "./node_modules/react-table/react-table.css",
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    }
-  ],
-  "./noop": [
-    {
-      "id": "./node_modules/next/dist/client/noop.js",
-      "name": "./node_modules/next/dist/client/noop.js",
-      "file": "static/chunks/0.js",
-      "publicPath": "static/chunks/0.js"
     }
   ]
 }
