@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { signIn, createUserToken } from '../../api/auth/cognito'
+import {
+  ignInUserSDK,
+  checkIsLoggedIn,
+} from '../../api/auth/cognito'
 
 import './LoginForm.scss'
 
@@ -13,6 +16,11 @@ class LoginForm extends Component {
     }
   }
 
+  componentDidMount() {
+    const user = checkIsLoggedIn()
+    console.log('>>> user', user)
+  }
+
   _handleUsernameChange = (event) => {
     this.setState({ username: event.target.value })
   }
@@ -23,12 +31,15 @@ class LoginForm extends Component {
 
   _handleClickSubmit = () => {
     const { username, password } = this.state
-    createUserToken(username, password)
+    signInUserSDK({ username, password })
   }
 
-  _onSuccessfulLogin = () => {
-    '>> SUCCESSSFULLY LOGGGGED IN!'
-  }
+  // _onSuccessfulLogin = (data) => {
+  //   console.log(
+  //     '>> SUCCESSSFULLY LOGGGGED IN!',
+  //     data
+  //   )
+  // }
 
   _onKeyPress = (event) => {
     if (event.key === 'Enter') {

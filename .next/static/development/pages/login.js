@@ -4,11 +4,13 @@
 /*!*****************************!*\
   !*** ./api/auth/cognito.js ***!
   \*****************************/
-/*! exports provided: signUpNewUser, createUserToken, getUserData, signOut, signIn, forgotPassword, resetPassword, getCurrentUser, getAccessToken */
+/*! exports provided: signInUserSDK, checkIsLoggedIn, signUpNewUser, createUserToken, getUserData, signOut, signIn, forgotPassword, resetPassword, getCurrentUser, getAccessToken */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signInUserSDK", function() { return signInUserSDK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkIsLoggedIn", function() { return checkIsLoggedIn; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signUpNewUser", function() { return signUpNewUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createUserToken", function() { return createUserToken; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserData", function() { return getUserData; });
@@ -28,6 +30,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
  // import tracker from './RequestTracker.js';
 
@@ -35,11 +39,93 @@ var userPool = new amazon_cognito_identity_js__WEBPACK_IMPORTED_MODULE_1__["Cogn
   UserPoolId: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.USER_POOL_ID,
   ClientId: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.APP_CLIENT_ID
 }); // HELPERS
+// this is directly from the SDK
+// https://www.npmjs.com/package/amazon-cognito-identity-js
 
-function signUpNewUser(_ref) {
+function signInUserSDK(_ref) {
   var username = _ref.username,
-      email = _ref.email,
       password = _ref.password;
+  var authenticationData = {
+    Username: username,
+    Password: password
+  };
+  var authenticationDetails = new amazon_cognito_identity_js__WEBPACK_IMPORTED_MODULE_1__["AuthenticationDetails"](authenticationData);
+  var poolData = {
+    UserPoolId: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.USER_POOL_ID,
+    // Your user pool id here
+    ClientId: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.APP_CLIENT_ID // Your client id here
+
+  };
+  var userPool = new amazon_cognito_identity_js__WEBPACK_IMPORTED_MODULE_1__["CognitoUserPool"](poolData);
+  var userData = {
+    Username: username,
+    Pool: userPool
+  };
+  var cognitoUser = new amazon_cognito_identity_js__WEBPACK_IMPORTED_MODULE_1__["CognitoUser"](userData);
+  cognitoUser.authenticateUser(authenticationDetails, {
+    onSuccess: function onSuccess(result) {
+      var accessToken = result.getAccessToken().getJwtToken(); //POTENTIAL: Region needs to be set if not already set previously elsewhere.
+
+      AWS.config.region = _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.REGION;
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.USER_POOL_ID,
+        // your identity pool id here
+        Logins: _defineProperty({}, "cognito-idp.".concat(_config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.REGION, ".amazonaws.com/").concat(_config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.USER_POOL_ID), result.getIdToken().getJwtToken())
+      }); //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+
+      AWS.config.credentials.refresh(function (error) {
+        if (error) {
+          console.error('credentials error', error);
+        } else {
+          // Instantiate aws sdk service objects now that the credentials have been updated.
+          // example: var s3 = new AWS.S3();
+          console.log('Successfully logged!');
+        }
+      });
+    },
+    onFailure: function onFailure(err) {
+      console.log(err.message || JSON.stringify(err));
+    }
+  });
+}
+function checkIsLoggedIn() {
+  var userPool = new amazon_cognito_identity_js__WEBPACK_IMPORTED_MODULE_1__["CognitoUserPool"]({
+    UserPoolId: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.USER_POOL_ID,
+    ClientId: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"].cognito.APP_CLIENT_ID
+  });
+  var cognitoUser = userPool.getCurrentUser();
+
+  if (cognitoUser !== null) {
+    return cognitoUser.getSession(function (err, res) {
+      if (err) {
+        console.log('checkIsLoggedIn error ', err);
+        throw err;
+      }
+
+      if (res && res.isValid()) {
+        return {
+          user: res,
+          loggedIn: res.isValid()
+        };
+      } else {
+        return {
+          user: res,
+          loggedIn: false
+        };
+      }
+    });
+  } else {
+    return {
+      user: {},
+      loggedIn: false
+    };
+  }
+} // all functions below this were ripped from Red Shift and need some looking at
+
+function signUpNewUser(_ref2) {
+  var username = _ref2.username,
+      email = _ref2.email,
+      password = _ref2.password;
   var authenticationData = {
     Username: username,
     Password: password
@@ -83,10 +169,10 @@ function createUserToken(username, password) {
     return user.authenticateUser(authenticationDetails, {
       onSuccess: function onSuccess(result) {
         console.log('> createUserToken SUCCESS', result);
-        resolve(result.getIdToken().getJwtToken());
+        resolve(result.getAccessToken().getJwtToken());
       },
       onFailure: function onFailure(err) {
-        return reject('> createUserToken', err);
+        return reject(err);
       }
     });
   });
@@ -456,11 +542,10 @@ function (_Component) {
       var _this$state = _this.state,
           username = _this$state.username,
           password = _this$state.password;
-      Object(_api_auth_cognito__WEBPACK_IMPORTED_MODULE_1__["createUserToken"])(username, password);
-    });
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "_onSuccessfulLogin", function () {
-      '>> SUCCESSSFULLY LOGGGGED IN!';
+      signInUserSDK({
+        username: username,
+        password: password
+      });
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "_onKeyPress", function (event) {
@@ -477,6 +562,12 @@ function (_Component) {
   }
 
   _createClass(LoginForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var user = Object(_api_auth_cognito__WEBPACK_IMPORTED_MODULE_1__["checkIsLoggedIn"])();
+      console.log('>>> user', user);
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
