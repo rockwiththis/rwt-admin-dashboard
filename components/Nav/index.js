@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-
+import { signOut } from '../../api/auth/cognito'
 import './Nav.scss'
 
 
@@ -17,6 +17,10 @@ const navLinks = [
     title: 'Upload',
     url: '/upload',
   },
+  {
+    title: 'Sign Out',
+    action: signOut,
+  }
 ]
 
 const Nav = ({ isLoggedIn }) => {
@@ -29,12 +33,20 @@ const Nav = ({ isLoggedIn }) => {
           </div>
         </Link>
         <div className={'nav__links'}>
-          {isLoggedIn && navLinks.map(({ title, url }) => (
-            <Link href={url} key={url}>
-              <a className={'nav__link'}>
-                {title}
-              </a>
-            </Link>
+          {isLoggedIn && navLinks.map(({ title, url, action }) => (
+            url
+              ? (
+                <Link href={url} key={title}>
+                  <a className={'nav__link'}>
+                    {title}
+                  </a>
+                </Link>
+              )
+              : (
+                <div className={'nav__link'} key={title} onClick={action}>
+                  {title}
+                </div>
+              )
           ))}
         </div>
       </div>
