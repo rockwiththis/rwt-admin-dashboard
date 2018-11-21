@@ -4,10 +4,10 @@ import Nav from '../Nav'
 import './Layout.scss'
 
 
-const Layout = ({ children, user }) => {
+const Layout = ({ children, isLoggedIn }) => {
   return (
     <div className={'layout'}>
-      <Nav user={user} />
+      <Nav isLoggedIn={isLoggedIn} />
         <div className={'layout__content'}>
           {children}
         </div>

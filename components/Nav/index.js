@@ -19,8 +19,7 @@ const navLinks = [
   },
 ]
 
-const Nav = ({ user }) => {
-  const isUser = !!(user || {}).keys
+const Nav = ({ isLoggedIn }) => {
   return (
     <nav className={'nav'}>
       <div className={'nav__content'}>
@@ -30,7 +29,7 @@ const Nav = ({ user }) => {
           </div>
         </Link>
         <div className={'nav__links'}>
-          {isUser && navLinks.map(({ title, url }) => (
+          {isLoggedIn && navLinks.map(({ title, url }) => (
             <Link href={url} key={url}>
               <a className={'nav__link'}>
                 {title}

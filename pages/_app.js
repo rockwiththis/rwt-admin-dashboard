@@ -15,14 +15,20 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    // check if user is logged in
-    // const { loggedIn, user } = checkIsLoggedIn()
-    // if (!loggedIn) {
-    //   // If not logged in, redirect to login page
-    //   redirect({}, '/login')
-    // }
+    return { pageProps }
+  }
 
-    return { pageProps, user: null }
+  state = { loggedIn: false }
+
+  componentDidMount() {
+    // check if user is logged in
+    const { loggedIn, user } = checkIsLoggedIn()
+    console.log('>> user', user, loggedIn)
+    if (loggedIn) this.setState({ loggedIn })
+    if (!loggedIn) {
+      // If not logged in, redirect to login page
+      redirect({}, '/login')
+    }
   }
 
   componentDidCatch (error, errorInfo) {
@@ -32,12 +38,13 @@ class MyApp extends App {
   }
 
   render () {
-    const { Component, pageProps, user } = this.props
+    const { loggedIn } = this.state
+    const { Component, pageProps } = this.props
 
     return (
       <Container>
         <Meta />
-        <Layout user={user}>
+        <Layout isLoggedIn={loggedIn}>
           <Component {...pageProps} />
         </Layout>
       </Container>

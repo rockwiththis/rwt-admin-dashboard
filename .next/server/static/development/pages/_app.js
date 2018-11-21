@@ -614,11 +614,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var Layout = function Layout(_ref) {
   var children = _ref.children,
-      user = _ref.user;
+      isLoggedIn = _ref.isLoggedIn;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: 'layout'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    user: user
+    isLoggedIn: isLoggedIn
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: 'layout__content'
   }, children));
@@ -726,8 +726,7 @@ var navLinks = [{
 }];
 
 var Nav = function Nav(_ref) {
-  var user = _ref.user;
-  var isUser = !!(user || {}).keys;
+  var isLoggedIn = _ref.isLoggedIn;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: 'nav'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -738,7 +737,7 @@ var Nav = function Nav(_ref) {
     className: 'nav__logo'
   }, 'RockWithThis')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: 'nav__links'
-  }, isUser && navLinks.map(function (_ref2) {
+  }, isLoggedIn && navLinks.map(function (_ref2) {
     var title = _ref2.title,
         url = _ref2.url;
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -830,8 +829,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
 function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
@@ -841,6 +838,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -856,12 +857,44 @@ function (_App) {
   _inherits(MyApp, _App);
 
   function MyApp() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, MyApp);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MyApp).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(MyApp)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      loggedIn: false
+    });
+
+    return _this;
   }
 
   _createClass(MyApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // check if user is logged in
+      var _checkIsLoggedIn = Object(_api_auth_cognito__WEBPACK_IMPORTED_MODULE_5__["checkIsLoggedIn"])(),
+          loggedIn = _checkIsLoggedIn.loggedIn,
+          user = _checkIsLoggedIn.user;
+
+      console.log('>> user', user, loggedIn);
+      if (loggedIn) this.setState({
+        loggedIn: loggedIn
+      });
+
+      if (!loggedIn) {
+        // If not logged in, redirect to login page
+        Object(_lib_redirect_js__WEBPACK_IMPORTED_MODULE_6__["default"])({}, '/login');
+      }
+    }
+  }, {
     key: "componentDidCatch",
     value: function componentDidCatch(error, errorInfo) {
       console.log('!!! ERROR CAUGHT', error); // This is needed to render errors correctly in development / production
@@ -871,12 +904,12 @@ function (_App) {
   }, {
     key: "render",
     value: function render() {
+      var loggedIn = this.state.loggedIn;
       var _this$props = this.props,
           Component = _this$props.Component,
-          pageProps = _this$props.pageProps,
-          user = _this$props.user;
+          pageProps = _this$props.pageProps;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(next_app__WEBPACK_IMPORTED_MODULE_2__["Container"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Meta__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        user: user
+        isLoggedIn: loggedIn
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Component, pageProps)));
     }
   }], [{
@@ -906,8 +939,7 @@ function (_App) {
 
               case 6:
                 return _context.abrupt("return", {
-                  pageProps: pageProps,
-                  user: null
+                  pageProps: pageProps
                 });
 
               case 7:
