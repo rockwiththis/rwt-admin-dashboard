@@ -4,12 +4,13 @@
 /*!*****************************!*\
   !*** ./api/auth/cognito.js ***!
   \*****************************/
-/*! exports provided: signUpNewUser, getUserData, signOut, signIn, forgotPassword, resetPassword, getCurrentUser, getAccessToken */
+/*! exports provided: signUpNewUser, createUserToken, getUserData, signOut, signIn, forgotPassword, resetPassword, getCurrentUser, getAccessToken */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signUpNewUser", function() { return signUpNewUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createUserToken", function() { return createUserToken; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserData", function() { return getUserData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signOut", function() { return signOut; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signIn", function() { return signIn; });
@@ -96,7 +97,6 @@ function createUserToken(username, password) {
  * @param      {Object}   currentUser  The current user
  * @return     {Promise}  Promise resolving to user token
  */
-
 
 function getUserToken(currentUser) {
   return new Promise(function (resolve, reject) {
@@ -402,8 +402,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api_auth_cognito__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/auth/cognito */ "./api/auth/cognito.js");
-var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/components/LoginForm/index.js";
-
+/* harmony import */ var _LoginForm_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LoginForm.scss */ "./components/LoginForm/LoginForm.scss");
+/* harmony import */ var _LoginForm_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_LoginForm_scss__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -423,6 +423,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -452,11 +453,10 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "_handleClickSubmit", function () {
-      console.log('>> LOGIN', _this.state.username, _this.state.password);
       var _this$state = _this.state,
           username = _this$state.username,
           password = _this$state.password;
-      Object(_api_auth_cognito__WEBPACK_IMPORTED_MODULE_1__["signIn"])(username, password, _this._onSuccessfulLogin);
+      Object(_api_auth_cognito__WEBPACK_IMPORTED_MODULE_1__["createUserToken"])(username, password);
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "_onSuccessfulLogin", function () {
@@ -481,49 +481,27 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: 'loginForm__wrapper',
-        onKeyPress: this._onKeyPress,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 43
-        },
-        __self: this
+        onKeyPress: this._onKeyPress
       }, 'login', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this._handleClickSubmit,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 45
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onSubmit: this._handleClickSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: 'loginForm__container'
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this._handleUsernameChange,
         type: 'text',
         placeholder: 'Username/Email',
-        className: 'loginFormInput',
-        autoComplete: 'username',
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 46
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: 'loginForm__input',
+        autoComplete: 'username'
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this._handlePasswordChange,
         type: 'password',
         placeholder: 'Password',
-        className: 'loginFormInput',
-        autoComplete: 'current-password',
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 53
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: 'loginForm__input',
+        autoComplete: 'current-password'
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: 'submit',
         value: 'submit',
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 60
-        },
-        __self: this
+        className: 'loginForm__submit-button'
       })));
     }
   }]);
@@ -14763,7 +14741,7 @@ var LoginPage = function LoginPage() {
 
 /***/ }),
 
-/***/ 8:
+/***/ 6:
 /*!******************************!*\
   !*** multi ./pages/login.js ***!
   \******************************/
@@ -14788,5 +14766,5 @@ module.exports = dll_ecba6b44147cc8018369;
 
 /***/ })
 
-},[[8,"static/runtime/webpack.js"]]]));;
+},[[6,"static/runtime/webpack.js","styles"]]]));;
 //# sourceMappingURL=login.js.map

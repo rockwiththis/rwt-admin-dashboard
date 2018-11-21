@@ -43,7 +43,7 @@ export function signUpNewUser({ username, email, password }) {
  * @param      {string}   password  The password
  * @return     {Promise}  Promise resolving to user token
  */
-function createUserToken(username, password) {
+export function createUserToken(username, password) {
   const authenticationData = { Username: username, Password: password };
   const user = new CognitoUser({ Username: username, Pool: userPool });
   const authenticationDetails = new AuthenticationDetails(authenticationData);

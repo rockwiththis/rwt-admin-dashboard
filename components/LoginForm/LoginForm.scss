@@ -1,3 +1,32 @@
 .loginForm__wrapper {
   margin-top: 30px;
 }
+
+.loginForm__container {
+  display: flex;
+  flex-flow: column;
+}
+
+.loginForm__input {
+  margin: 4px 0;
+  padding: 8px;
+  width: 200px;
+  height: 30px;
+  border: 1px solid #1a6ea9;
+}
+
+.loginForm__submit-button {
+  margin-top: 2px;
+  width: 218px;
+  height: 42px;
+  border: 1px solid #1a6ea9;
+  background: #0097d5;
+  color: #ffffff;
+  font-size: 18px;
+  transition: background 0.3s ease;
+
+  &:active {
+    background: #1a6ea9;
+    transition: background 0.3s ease;
+  }
+}

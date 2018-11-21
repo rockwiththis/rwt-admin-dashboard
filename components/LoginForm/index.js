@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { signIn } from '../../api/auth/cognito'
+import { signIn, createUserToken } from '../../api/auth/cognito'
+
+import './LoginForm.scss'
 
 
 class LoginForm extends Component {
@@ -20,12 +22,8 @@ class LoginForm extends Component {
   }
 
   _handleClickSubmit = () => {
-    console.log(
-      '>> LOGIN',
-      this.state.username, this.state.password
-    )
     const { username, password } = this.state
-    signIn(username, password, this._onSuccessfulLogin)
+    createUserToken(username, password)
   }
 
   _onSuccessfulLogin = () => {
@@ -43,21 +41,31 @@ class LoginForm extends Component {
       <div className={'loginForm__wrapper'} onKeyPress={this._onKeyPress}>
         {'login'}
         <form onSubmit={this._handleClickSubmit}>
+          <div className={'loginForm__container'}>
+            <div>
+              <input
+                onChange={this._handleUsernameChange}
+                type={'text'}
+                placeholder={'Username/Email'}
+                className={'loginForm__input'}
+                autoComplete={'username'}
+              />
+            </div>
+            <div>
+              <input
+                onChange={this._handlePasswordChange}
+                type={'password'}
+                placeholder={'Password'}
+                className={'loginForm__input'}
+                autoComplete={'current-password'}
+              />
+            </div>
+          </div>
           <input
-            onChange={this._handleUsernameChange}
-            type={'text'}
-            placeholder={'Username/Email'}
-            className={'loginFormInput'}
-            autoComplete={'username'}
+            type={'submit'}
+            value={'submit'}
+            className={'loginForm__submit-button'}
           />
-          <input
-            onChange={this._handlePasswordChange}
-            type={'password'}
-            placeholder={'Password'}
-            className={'loginFormInput'}
-            autoComplete={'current-password'}
-          />
-          <input type={'submit'} value={'submit'} />
         </form>
       </div>
     )
