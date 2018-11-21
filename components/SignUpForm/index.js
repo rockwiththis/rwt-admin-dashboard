@@ -16,14 +16,14 @@ class LoginForm extends Component {
     this.setState({ [field]: event.target.value })
   }
 
-  _handleClickSubmit = () => {
+  _handleSubmit = () => {
     const { username, password } = this.state
     signUpNewUser({ username: username, password: password })
   }
 
   _onKeyPress = (event) => {
     if (event.key === 'Enter') {
-      this._handleClickSubmit()
+      this._handleSubmit()
     }
   }
 
@@ -31,7 +31,7 @@ class LoginForm extends Component {
     return (
       <div className={'loginForm__wrapper'} onKeyPress={this._onKeyPress}>
         {'SIGN UP'}
-        <form onSubmit={this._handleClickSubmit}>
+        <form onSubmit={this._handleSubmit}>
           <input
             onChange={(event) => this._handleFieldChange('username', event)}
             type={'text'}

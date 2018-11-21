@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import CardGrid from '../components/CardGrid'
+import { checkLoggedIn } from '../api/auth/cognito'
 
 
 const cardsList = [
@@ -23,20 +24,22 @@ const cardsList = [
   },
 ]
 
-const Home = () => {
-  return (
-    <div>
-      <CardGrid cardsList={cardsList} />
-      <div style={{ marginTop: 50 }}>
-        {'TODO:'}
-        <ul>
-          <li>{'get upload working'}</li>
-          <li>{'setup auth wrapper'}</li>
-          <li>{'improve songs table'}</li>
-        </ul>
+class Home extends Component {
+  render() {
+    return (
+      <div>
+        <CardGrid cardsList={cardsList} />
+        <div style={{ marginTop: 50 }}>
+          {'TODO:'}
+          <ul>
+            <li>{'get upload working'}</li>
+            <li>{'setup auth wrapper'}</li>
+            <li>{'improve songs table'}</li>
+          </ul>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Home

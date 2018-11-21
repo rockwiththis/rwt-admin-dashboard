@@ -1,1 +1,1 @@
-{"/_app":"static/development/pages/_app.js","/_error":"static/development/pages/_error.js","/_document":"static/development/pages/_document.js","/login":"static/development/pages/login.js"}
+{"/_app":"static/development/pages/_app.js","/_error":"static/development/pages/_error.js","/_document":"static/development/pages/_document.js","/users":"static/development/pages/users.js","/index":"static/development/pages/index.js","/upload":"static/development/pages/upload.js","/songs":"static/development/pages/songs.js","/":"static/development/pages/index.js"}

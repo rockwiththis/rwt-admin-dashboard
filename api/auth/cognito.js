@@ -20,24 +20,24 @@ export function signInUserSDK({ username, password }) {
   const authenticationData = {
     Username : username,
     Password : password,
-  };
-  const authenticationDetails = new AuthenticationDetails(authenticationData);
+  }
+  const authenticationDetails = new AuthenticationDetails(authenticationData)
   const poolData = {
     UserPoolId : config.cognito.USER_POOL_ID, // Your user pool id here
     ClientId : config.cognito.APP_CLIENT_ID // Your client id here
-  };
-  const userPool = new CognitoUserPool(poolData);
+  }
+  const userPool = new CognitoUserPool(poolData)
   const userData = {
     Username : username,
     Pool : userPool
-  };
-  const cognitoUser = new CognitoUser(userData);
+  }
+  const cognitoUser = new CognitoUser(userData)
   cognitoUser.authenticateUser(authenticationDetails, {
     onSuccess: function (result) {
-      const accessToken = result.getAccessToken().getJwtToken();
+      const accessToken = result.getAccessToken().getJwtToken()
 
       //POTENTIAL: Region needs to be set if not already set previously elsewhere.
-      AWS.config.region = config.cognito.REGION;
+      AWS.config.region = config.cognito.REGION
 
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
         IdentityPoolId : config.cognito.USER_POOL_ID, // your identity pool id here
@@ -45,24 +45,39 @@ export function signInUserSDK({ username, password }) {
           // Change the key below according to the specific region your user pool is in.
           [`cognito-idp.${config.cognito.REGION}.amazonaws.com/${config.cognito.USER_POOL_ID}`] : result.getIdToken().getJwtToken()
         }
-      });
+      })
 
       //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
       AWS.config.credentials.refresh((error) => {
           if (error) {
-            console.error('credentials error', error);
+            console.error('credentials error', error)
           } else {
            // Instantiate aws sdk service objects now that the credentials have been updated.
-           // example: var s3 = new AWS.S3();
-           console.log('Successfully logged!');
+           // example: var s3 = new AWS.S3()
+           console.log('Successfully logged!')
           }
-        });
+        })
       },
+      newPasswordRequired: function(userAttributes, requiredAttributes) {
+        // User was signed up by an admin and must provide new
+        // password and required attributes, if any, to complete
+        // authentication.
 
-      onFailure: function(err) {
-        console.log(err.message || JSON.stringify(err));
+        userAttributes.name = username
+
+        // the api doesn't accept this field back
+        delete userAttributes.email_verified
+
+        // unsure about this field, but I don't send this back
+        delete userAttributes.phone_number_verified
+
+        // Get these details and call
+        cognitoUser.completeNewPasswordChallenge(password, userAttributes, this)
       },
-  });
+      onFailure: function(err) {
+        console.log(err.message || JSON.stringify(err))
+      },
+  })
 }
 
 
@@ -70,24 +85,24 @@ export function checkIsLoggedIn() {
   const userPool = new CognitoUserPool({
     UserPoolId: config.cognito.USER_POOL_ID,
     ClientId: config.cognito.APP_CLIENT_ID
-  });
+  })
 
-  const cognitoUser = userPool.getCurrentUser();
+  const cognitoUser = userPool.getCurrentUser()
 
   if (cognitoUser !== null) {
     return cognitoUser.getSession((err, res) => {
       if(err) {
-        console.log('checkIsLoggedIn error ', err);
-        throw err;
+        console.log('checkIsLoggedIn error ', err)
+        throw err
       }
       if(res && res.isValid()) {
-        return { user: res, loggedIn: res.isValid() };
+        return { user: res, loggedIn: res.isValid() }
       } else {
-        return { user: res, loggedIn: false };
+        return { user: res, loggedIn: false }
       }
-    });
+    })
   } else {
-    return { user: {}, loggedIn: false };
+    return { user: {}, loggedIn: false }
   }
 }
 
@@ -209,7 +224,7 @@ export function signOut(onSignOut) {
  * @param      {string}    password   The password
  * @param      {Function}  onSuccess  Callback run on signin success
  */
-export async function signIn(username, password, onSuccess) {
+export async function signIn({ username, password, onSuccess }) {
   try {
     await createUserToken(username, password);
     const data = await getUserData();

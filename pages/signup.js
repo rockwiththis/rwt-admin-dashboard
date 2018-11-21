@@ -1,14 +1,25 @@
-import React from 'react'
+import React, { Component } from 'react'
 import SignUpForm from '../components/SignUpForm'
+import { checkIsLoggedIn } from '../api/auth/cognito'
+import redirect from '../lib/redirect.js'
 
 
-const LoginPage = () => {
+class LoginPage extends Component {
+  componentDidMount () {
+    const { loggedIn } = checkIsLoggedIn()
+    if (loggedIn) {
+      // If logged in, redirect to the home page
+      redirect({}, '/')
+    }
+  }
 
-  return (
-    <div>
-      <SignUpForm />
-    </div>
-  )
+  render() {
+    return (
+      <div>
+        <SignUpForm />
+      </div>
+    )
+  }
 }
 
 export default LoginPage

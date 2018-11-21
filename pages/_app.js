@@ -2,7 +2,8 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import Meta from '../components/Meta'
 import Layout from '../components/Layout'
-
+import { checkIsLoggedIn } from '../api/auth/cognito'
+import redirect from '../lib/redirect.js'
 import '../index.scss'
 
 
@@ -14,7 +15,14 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    return { pageProps }
+    // check if user is logged in
+    // const { loggedIn, user } = checkIsLoggedIn()
+    // if (!loggedIn) {
+    //   // If not logged in, redirect to login page
+    //   redirect({}, '/login')
+    // }
+
+    return { pageProps, user: null }
   }
 
   componentDidCatch (error, errorInfo) {
@@ -24,12 +32,12 @@ class MyApp extends App {
   }
 
   render () {
-    const { Component, pageProps } = this.props
+    const { Component, pageProps, user } = this.props
 
     return (
       <Container>
         <Meta />
-        <Layout>
+        <Layout user={user}>
           <Component {...pageProps} />
         </Layout>
       </Container>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {
-  ignInUserSDK,
+  signInUserSDK,
   checkIsLoggedIn,
+  signIn,
 } from '../../api/auth/cognito'
 
 import './LoginForm.scss'
@@ -29,21 +30,16 @@ class LoginForm extends Component {
     this.setState({ password: event.target.value })
   }
 
-  _handleClickSubmit = () => {
+  _handleSubmit = (event) => {
+    event.preventDefault();
+
     const { username, password } = this.state
     signInUserSDK({ username, password })
   }
 
-  // _onSuccessfulLogin = (data) => {
-  //   console.log(
-  //     '>> SUCCESSSFULLY LOGGGGED IN!',
-  //     data
-  //   )
-  // }
-
   _onKeyPress = (event) => {
     if (event.key === 'Enter') {
-      this._handleClickSubmit()
+      this._handleSubmit(event)
     }
   }
 
@@ -51,7 +47,7 @@ class LoginForm extends Component {
     return (
       <div className={'loginForm__wrapper'} onKeyPress={this._onKeyPress}>
         {'login'}
-        <form onSubmit={this._handleClickSubmit}>
+        <form onSubmit={this._handleSubmit}>
           <div className={'loginForm__container'}>
             <div>
               <input
