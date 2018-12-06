@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -609,7 +609,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Card_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Card.scss */ "./components/Card/Card.scss");
 /* harmony import */ var _Card_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Card_scss__WEBPACK_IMPORTED_MODULE_2__);
-var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/components/Card/index.js";
 
 
 
@@ -621,72 +620,27 @@ var Card = function Card(_ref) {
       buttonText = _ref.buttonText,
       url = _ref.url;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    href: url,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 9
-    },
-    __self: this
+    href: url
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'card',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 10
-    },
-    __self: this
+    className: 'card'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'card__image',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 11
-    },
-    __self: this
+    className: 'card__image'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: imageUrl,
     alt: title,
     style: {
       height: 295
-    },
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 12
-    },
-    __self: this
+    }
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'card__content',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 14
-    },
-    __self: this
+    className: 'card__content'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'card__content__text',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 15
-    },
-    __self: this
+    className: 'card__content__text'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'card__content__text__title',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 16
-    },
-    __self: this
+    className: 'card__content__text__title'
   }, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'card__content__text__description',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 19
-    },
-    __self: this
+    className: 'card__content__text__description'
   }, description), buttonText && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'card__content__text__button',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 23
-    },
-    __self: this
+    className: 'card__content__text__button'
   }, buttonText)))));
 };
 
@@ -719,7 +673,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Card__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Card */ "./components/Card/index.js");
 /* harmony import */ var _CardGrid_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CardGrid.scss */ "./components/CardGrid/CardGrid.scss");
 /* harmony import */ var _CardGrid_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CardGrid_scss__WEBPACK_IMPORTED_MODULE_2__);
-var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/components/CardGrid/index.js";
 
 
 
@@ -727,12 +680,7 @@ var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/componen
 var CardGrid = function CardGrid(_ref) {
   var cardsList = _ref.cardsList;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: 'cardGrid',
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 9
-    },
-    __self: this
+    className: 'cardGrid'
   }, cardsList.map(function (_ref2) {
     var title = _ref2.title,
         description = _ref2.description,
@@ -740,22 +688,12 @@ var CardGrid = function CardGrid(_ref) {
         url = _ref2.url;
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: 'cardGrid__card',
-      key: url,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 11
-      },
-      __self: this
+      key: url
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Card__WEBPACK_IMPORTED_MODULE_1__["default"], {
       title: title,
       description: description,
       imageUrl: imageUrl,
-      url: url,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 12
-      },
-      __self: this
+      url: url
     }));
   }));
 };
@@ -846,7 +784,7 @@ function (_Component) {
 
 /***/ }),
 
-/***/ 5:
+/***/ 7:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/

@@ -11,8 +11,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALL_SONGS_URL", function() { return FETCH_ALL_SONGS_URL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALL_CURATORS_URL", function() { return FETCH_ALL_CURATORS_URL; });
-var FETCH_ALL_SONGS_URL = 'http://localhost:9292/v1/songs';
-var FETCH_ALL_CURATORS_URL = 'http://localhost:9292/v1/curators';
+var FETCH_ALL_SONGS_URL = 'http://localhost:9292/api/songs';
+var FETCH_ALL_CURATORS_URL = 'http://localhost:9292/api/curators';
 
 /***/ }),
 
@@ -4316,7 +4316,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_table_react_table_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_table_react_table_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _api_urls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../api/urls */ "./api/urls.js");
 
-var _jsxFileName = "/Users/josephwilliams/Documents/rwt-admin-dashboard/pages/songs.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4439,22 +4438,11 @@ function (_Component) {
     value: function render() {
       var songsList = this.state.songsList;
       var isLoaded = songsList.length > 0;
-      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 55
-        },
-        __self: this
-      }, isLoaded ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_table__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, isLoaded ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_table__WEBPACK_IMPORTED_MODULE_3__["default"], {
         data: songsList,
         columns: columns,
         defaultPageSize: 20,
-        className: "-striped -highlight",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 58
-        },
-        __self: this
+        className: "-striped -highlight"
       }) : 'loading...');
     }
   }]);
@@ -4485,7 +4473,7 @@ function (_Component) {
 
 /***/ }),
 
-/***/ 12:
+/***/ 9:
 /*!******************************!*\
   !*** multi ./pages/songs.js ***!
   \******************************/
@@ -4510,5 +4498,5 @@ module.exports = dll_ecba6b44147cc8018369;
 
 /***/ })
 
-},[[12,"static/runtime/webpack.js","styles"]]]));;
+},[[9,"static/runtime/webpack.js","styles"]]]));;
 //# sourceMappingURL=songs.js.map
