@@ -29,7 +29,7 @@ const Nav = ({ isLoggedIn }) => {
       <div className={'nav__content'}>
         <Link href={'/'}>
           <div className={'nav__logo'}>
-            {'RockWithThis'}
+            <img src="/static/logo-desktop.png" />
           </div>
         </Link>
         <div className={'nav__links'}>

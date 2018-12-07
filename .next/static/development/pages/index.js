@@ -522,10 +522,7 @@ var Card = function Card(_ref) {
     className: 'card__image'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: imageUrl,
-    alt: title,
-    style: {
-      height: 295
-    }
+    alt: title
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: 'card__content'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -23774,20 +23771,15 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 var cardsList = [{
-  title: 'Songs',
+  title: 'All Songs',
   url: '/songs',
   description: 'View all of the songs that have been uploaded.',
-  imageUrl: '/static/image_card_songs.png'
-}, {
-  title: 'Users',
-  url: '/users',
-  description: 'View all of the curators.',
-  imageUrl: '/static/image_card_users.png'
+  imageUrl: '/static/album-collage.jpg'
 }, {
   title: 'Upload Song',
   url: '/upload',
   description: 'Upload a song.',
-  imageUrl: '/static/image_card_upload.png'
+  imageUrl: '/static/plus-gradient.jpg'
 }];
 
 var Home =
@@ -23806,11 +23798,7 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_CardGrid__WEBPACK_IMPORTED_MODULE_1__["default"], {
         cardsList: cardsList
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        style: {
-          marginTop: 50
-        }
-      }, 'TODO:', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, 'get upload working'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, 'setup auth wrapper'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, 'improve songs table'))));
+      }));
     }
   }]);
 

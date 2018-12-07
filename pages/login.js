@@ -6,7 +6,8 @@ import redirect from '../lib/redirect.js'
 
 class LoginPage extends Component {
   componentDidMount () {
-    const { loggedIn } = checkIsLoggedIn()
+    // const { loggedIn } = checkIsLoggedIn()
+    const loggedIn = true
     if (loggedIn) {
       // If logged in, redirect to the home page
       redirect({}, '/')

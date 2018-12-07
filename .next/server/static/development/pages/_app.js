@@ -712,7 +712,9 @@ var Nav = function Nav(_ref) {
     href: '/'
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: 'nav__logo'
-  }, 'RockWithThis')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "/static/logo-desktop.png"
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: 'nav__links'
   }, isLoggedIn && navLinks.map(function (_ref2) {
     var title = _ref2.title,

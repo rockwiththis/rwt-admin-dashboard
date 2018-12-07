@@ -20,12 +20,12 @@
   width: 218px;
   height: 42px;
   border: 1px solid #1a6ea9;
-  background: linear-gradient(0.25turn, #1e0c49, #1a6ea9, #0097d5);
+  background: #0097d5;
   color: #ffffff;
   font-size: 18px;
   cursor: pointer;
 
   &:hover {
-    background: linear-gradient(0.25turn, #0097d5, #1a6ea9, #1e0c49);
+    background: #1a6ea9;
   }
 }

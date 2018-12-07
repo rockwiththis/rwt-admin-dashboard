@@ -13,13 +13,13 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/songs": [
+    "/index": [
       "static/runtime/webpack.js",
       "static/css/styles.chunk.css",
       "static/chunks/styles.js",
       "static/runtime/main.js"
     ],
-    "/index": [
+    "/upload": [
       "static/runtime/webpack.js",
       "static/css/styles.chunk.css",
       "static/chunks/styles.js",
