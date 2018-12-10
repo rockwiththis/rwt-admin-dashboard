@@ -58,18 +58,21 @@ class SongsPage extends Component {
     const isLoaded = songsList.length > 0
     return (
       <div>
+        <div className="songs-container">
         {isLoaded
           ? (
             <ReactTable
               data={songsList}
               columns={columns}
-              defaultPageSize={20}
-              className="-striped -highlight"
+              defaultPageSize={16}
+              className="-striped -highlight table-container"
             />
           )
           : (
             'loading...'
           )}
+        </div>
+
       </div>
     );
   }

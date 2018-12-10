@@ -3,10 +3,75 @@ import './UploadSongForm.scss'
 
 const defaultFields = {
   songTitle: '',
-  artistTitle: '',
-  youtubeUrl: '',
-  yearReleased: '',   // This field is not currently in the database
+  artistName: '',
+  description: '',
+  imageUrl: '',
+  curatorId: '',
+  createdAt: '',
+  spotifyLink: '',
+  soundcloudLink: '',
+  soundcloudTrackId: '',
+  youtubeLink: '',
+  youtubeTrackId: '',
+  bpm: '',
+  artistLocation: ''
 }
+
+
+// const defaultFields = {
+//   songTitle: {
+//     placeholder: 'Song Title',
+//     value: ''
+//   },
+//   artistName: {
+//     placeholder: 'Artist Name',
+//     value: ''
+//   },
+//   description: {
+//     placeholder: 'Song Write Up',
+//     value: ''
+//   },
+//   imageUrl: {
+//     placeholder: 'Song Image',
+//     value: ''
+//   },
+//   curatorId: {
+//     placeholder: 'Curator',
+//     value: ''
+//   },
+//   createdAt: {
+//     placeholder: 'Publish Date',
+//     value: ''
+//   },
+//   spotifyLink: {
+//     placeholder: 'Spotify Link',
+//     value: ''
+//   },
+//   soundcloudLink: {
+//     placeholder: 'Soundcloud Link',
+//     value: ''
+//   },
+//   soundcloudTrackId: {
+//     placeholder: 'Soundcloud Track ID',
+//     value: ''
+//   },
+//   youtubeLink: {
+//     placeholder: 'Youtube Link',
+//     value: ''
+//   },
+//   youtubeTrackId: {
+//     placeholder: 'Youtube Track ID',
+//     value: ''
+//   },
+//   bpm: {
+//     placeholder: 'BPM',
+//     value: ''
+//   },
+//   artistLocation: {
+//     placeholder: 'Artist Location',
+//     value: ''
+//   }
+// }
 
 
 class UploadSongForm extends Component {
@@ -61,14 +126,33 @@ _handleSubmit = (event) => {
   event.preventDefault();
 
   const request = new Request(
-    "http://localhost:9292/api/songs/", {
+    "http://localhost:9292/api/songs", {
     method: "POST",
     body: JSON.stringify({
       name: this.state.songTitle,
-      artistName: this.state.artistTitle,
+      artistName: this.state.artistName,
+      description: this.state.description,
+      imageUrl: this.state.imageUrl,
+      curatorId: this.state.curatorId,
+      spotify: {
+        fields: {
+          link: this.state.spotifyLink
+        }
+      },
+      soundcloud: {
+        fields: {
+          link: this.state.soundCloudLink,
+          trackId: this.state.soundCloudTrackId
+        }
+      },
       youtube: {
-        link: this.state.youtubeUrl
-      }
+        fields: {
+          link: this.state.youtubeLink,
+          trackId: this.state.youtubeTrackId
+        }
+      },
+      bpm: this.state.bpm,
+      artistLocation: this.state.artistLocation
     })
   });
 
@@ -105,7 +189,12 @@ _onKeyPress = (event) => {
 }
 
 render() {
+  // console.log("inputFields", this.state.fields);
+
   const inputFields = Object.keys(this.state.fields);
+  console.log("inputFields", this.state.fields);
+console.log(inputFields);
+
   return (
     <div className={'loginForm__wrapper'} onKeyPress={this._onKeyPress}>
       {'upload song'}
