@@ -55,7 +55,7 @@
       "publicPath": "static/chunks/styles.js"
     },
     {
-      "id": 8,
+      "id": 10,
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
@@ -69,18 +69,18 @@
       "publicPath": "static/chunks/styles.js"
     }
   ],
-  "./UploadSongForm.scss": [
-    {
-      "id": "./components/UploadSongForm/UploadSongForm.scss",
-      "name": "./components/UploadSongForm/UploadSongForm.scss",
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    }
-  ],
   "../index.scss": [
     {
       "id": "./index.scss",
       "name": "./index.scss",
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    }
+  ],
+  "react-table/react-table.css": [
+    {
+      "id": "./node_modules/react-table/react-table.css",
+      "name": "./node_modules/react-table/react-table.css",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }

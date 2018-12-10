@@ -19,7 +19,7 @@
       "static/chunks/styles.js",
       "static/runtime/main.js"
     ],
-    "/upload": [
+    "/songs": [
       "static/runtime/webpack.js",
       "static/css/styles.chunk.css",
       "static/chunks/styles.js",
