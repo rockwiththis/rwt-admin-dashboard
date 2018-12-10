@@ -25,6 +25,10 @@ const columns = [
     accessor: 'description',
   },
   {
+    Header: 'image',
+    accessor: 'image_url',
+  },
+  {
     Header: 'BPM',
     accessor: 'bpm',
     maxWidth: 50,
@@ -50,6 +54,7 @@ class SongsPage extends Component {
 
   render() {
     const { songsList } = this.state
+    console.log("songsList", songsList);
     const isLoaded = songsList.length > 0
     return (
       <div>
