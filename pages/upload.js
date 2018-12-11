@@ -1,10 +1,10 @@
 import React from 'react'
-import UploadSongForm from '../components/UploadSongForm'
+import UploadSong from '../components/UploadSong'
 
 
 const Upload = () => (
   <div>
-    <UploadSongForm />
+      <UploadSong />
   </div>
 )
 

@@ -27,7 +27,7 @@ class MyApp extends App {
     if (loggedIn) this.setState({ loggedIn })
     if (!loggedIn) {
       // If not logged in, redirect to login page
-      redirect({}, '/login')
+      // redirect({}, '/login')
     }
   }
 

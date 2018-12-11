@@ -138,7 +138,6 @@ class UploadSongForm extends Component {
 
     return (
       <div className={'loginForm__wrapper'} onKeyPress={this._onKeyPress}>
-        {'upload song'}
         <form onSubmit={this._handleSubmit}>
           <div className={'loginForm__container'}>
             {inputFields.map((inputKey) => (
