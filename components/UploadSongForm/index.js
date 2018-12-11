@@ -18,61 +18,6 @@ const defaultFields = {
 }
 
 
-// const defaultFields = {
-//   songTitle: {
-//     placeholder: 'Song Title',
-//     value: ''
-//   },
-//   artistName: {
-//     placeholder: 'Artist Name',
-//     value: ''
-//   },
-//   description: {
-//     placeholder: 'Song Write Up',
-//     value: ''
-//   },
-//   imageUrl: {
-//     placeholder: 'Song Image',
-//     value: ''
-//   },
-//   curatorId: {
-//     placeholder: 'Curator',
-//     value: ''
-//   },
-//   createdAt: {
-//     placeholder: 'Publish Date',
-//     value: ''
-//   },
-//   spotifyLink: {
-//     placeholder: 'Spotify Link',
-//     value: ''
-//   },
-//   soundcloudLink: {
-//     placeholder: 'Soundcloud Link',
-//     value: ''
-//   },
-//   soundcloudTrackId: {
-//     placeholder: 'Soundcloud Track ID',
-//     value: ''
-//   },
-//   youtubeLink: {
-//     placeholder: 'Youtube Link',
-//     value: ''
-//   },
-//   youtubeTrackId: {
-//     placeholder: 'Youtube Track ID',
-//     value: ''
-//   },
-//   bpm: {
-//     placeholder: 'BPM',
-//     value: ''
-//   },
-//   artistLocation: {
-//     placeholder: 'Artist Location',
-//     value: ''
-//   }
-// }
-
 
 class UploadSongForm extends Component {
   constructor(props) {
@@ -192,8 +137,8 @@ render() {
   // console.log("inputFields", this.state.fields);
 
   const inputFields = Object.keys(this.state.fields);
-  console.log("inputFields", this.state.fields);
-console.log(inputFields);
+//   console.log("inputFields", this.state.fields);
+// console.log(inputFields);
 
   return (
     <div className={'loginForm__wrapper'} onKeyPress={this._onKeyPress}>
