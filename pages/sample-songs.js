@@ -1,50 +1,42 @@
 import React, { Component } from 'react'
 import fetch from 'isomorphic-unfetch'
 import ReactTable from 'react-table'
-import Link from 'next/link'
 import 'react-table/react-table.css'
 import { FETCH_ALL_SONGS_URL } from '../api/urls'
-import Moment from 'react-moment'
-
 
 
 const columns = [
   {
+    Header: 'id',
+    accessor: 'id',
+    maxWidth: 50,
+  },
+  {
     Header: 'Name',
     accessor: 'name',
-    Cell: (row) => {
-      console.log('row: ', row)
-      return (<Link href={`/song/${row.original.id}`}>{row.value}</Link>)
-    }
+    // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
   },
   {
     Header: 'Artist',
     accessor: 'artist_name',
   },
   {
-    Header: 'Curator',
-    accessor: 'curator_id',
-    maxWidth: 150,
+    Header: 'Description',
+    accessor: 'description',
   },
   {
-    Header: 'Tags',
-    accessor: "Tags",
-    maxWidth: 200,
-    Cell: (row) => {
-      const subgenreList = row.original.sub_genres.map(subgenre =>
-        <span className="tag-wrapper"><Link href={`/subgenre/${subgenre.id}`}>{subgenre.name}</Link>,</span>
-      )
-
-      return (<div>{subgenreList}</div>)
-    }
+    Header: 'image',
+    accessor: 'image_url',
   },
   {
-    Header: 'Date',
+    Header: 'BPM',
+    accessor: 'bpm',
+    maxWidth: 50,
+  },
+  {
+    Header: 'Created At',
     accessor: 'created_at',
-    maxWidth: 100,
-    Cell: (row) => {
-      return (<Moment format="M/d/YY" date={row.value} />)
-    }
+    maxWidth: 150,
   },
 ]
 

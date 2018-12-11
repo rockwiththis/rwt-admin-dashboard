@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../Nav'
+import Header from '../Header'
 
 import './Layout.scss'
 
@@ -7,7 +7,7 @@ import './Layout.scss'
 const Layout = ({ children, isLoggedIn }) => {
   return (
     <div className={'layout'}>
-      <Nav isLoggedIn={isLoggedIn} />
+      <Header isLoggedIn={isLoggedIn} />
         <div className={'layout__content'}>
           {children}
         </div>

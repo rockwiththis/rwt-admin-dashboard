@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { signOut } from '../../api/auth/cognito'
-import './Nav.scss'
+import './Header.scss'
 
 
 const navLinks = [
