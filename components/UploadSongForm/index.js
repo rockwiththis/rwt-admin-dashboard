@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import Select from 'react-select';
 import './UploadSongForm.scss'
+import ReactS3Uploader from 'react-s3-uploader'
+
 
 
 const defaultFields = {
@@ -19,6 +21,10 @@ const defaultFields = {
   artistLocation: '',
   selectedSubgenres: []
 }
+
+const placeholderSubgenres = [
+  { value: 'Subgenre', label: 'Subgenre' },
+];
 
 class UploadSongForm extends Component {
   constructor(props) {
@@ -143,6 +149,11 @@ class UploadSongForm extends Component {
   }
 
   render() {
+
+    const { subgenres, selectedSubgenres } = this.state;
+    const isLoaded = subgenres.length > 0
+
+
     return (
       <div className={'song-container'} onKeyPress={this._onKeyPress}>
         <form onSubmit={this._handleSubmit}>
@@ -262,13 +273,23 @@ class UploadSongForm extends Component {
                       <div className={'right-content'}>
 
                         <p className="field-title">Subgenres</p>
-                        <Select
-                          value={this.state.selectedSubgenres}
-                          isMulti={true}
-                          onChange={this._handleSelectedSubgenresChange}
-                          options={this.state.subgenres}
-                          isLoading={this.state.subgenres.length == 0}
-                        />
+
+                        {
+                          this.state.subgenres.length > 0 ?
+                          <Select
+                            value={this.state.selectedSubgenres}
+                            isMulti={true}
+                            onChange={this._handleSelectedSubgenresChange}
+                            options={this.state.subgenres}
+                          /> :
+                          <Select
+                            value={this.state.selectedSubgenres}
+                            isMulti={true}
+                            onChange={this._handleSelectedSubgenresChange}
+                            options={placeholderSubgenres}
+                          />
+                        }
+
 
                         <div className="upload-field imageUrl" key='imageUrl'>
                         <p className="field-title">Image Url</p>

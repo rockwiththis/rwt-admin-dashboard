@@ -83,6 +83,32 @@ class SongsTable extends Component {
     this.setState({ songsList: resJson })
   }
 
+
+  _handleDelete = (song) => {
+
+    const requestParams = {
+      method: "DELETE"
+    };
+
+    fetch(`http://localhost:9292/api/songs/${song.id}`, requestParams)
+      .then(response => {
+        if (response.ok) {
+          const msg = "Successfully deleted song"
+          console.log(msg);
+          this.refreshForm(msg)
+        } else {
+          console.log(`Server error: ${response.statusText}`);
+          this.setState({ error: response.statusText });
+        }
+        return;
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ error: error });
+        return;
+      });
+  }
+
   render() {
     const { songsList } = this.state
     console.log("songsList", songsList);
@@ -109,7 +135,7 @@ class SongsTable extends Component {
                           <ul>
                             <li><Link href={`/song/${row.original.id}`}>edit</Link></li>
                             <li><a target="_blank" href={`http://localhost:3000/songs/${row.original.id}`}>view</a></li>
-                            <li className="delete"><Link href="/">delete</Link></li>
+                            <li className="delete"><button onClick={this._handleDelete(row.original)}>delete</button></li>
                           </ul>
                       </div>
 
