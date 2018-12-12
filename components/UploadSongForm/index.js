@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import Select from 'react-select';
 import './UploadSongForm.scss'
-import SubgenresSelect from "../SubgenresSelect"
 
 
 const defaultFields = {
