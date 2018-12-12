@@ -144,9 +144,6 @@ class UploadSongForm extends Component {
   }
 
   render() {
-    const inputFields = Object.keys(this.state.fields);
-    console.log(inputFields);
-
     return (
       <div className={'song-container'} onKeyPress={this._onKeyPress}>
         <form onSubmit={this._handleSubmit}>
@@ -154,59 +151,65 @@ class UploadSongForm extends Component {
             {
               <Fragment>
                     <div className={'left-content'}>
-                        <div className="upload-field song-name" key={inputFields[0]}>
+                        <div className="upload-field song-name" key='songTitle'>
                         <p className="field-title">Song Name</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[0])}
+                            value={this.state.fields.songTitle}
+                            onChange={this._handleInputChange('songTitle')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
                           />
                         </div>
 
-                        <div className="upload-field artist-title" key={inputFields[1]}>
+                        <div className="upload-field artist-title" key='artistName'>
                         <p className="field-title">Artist Name</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[1])}
+                            value={this.state.fields.artistName}
+                            onChange={this._handleInputChange('artistName')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
                           />
                         </div>
 
-                        <div className="upload-field song-description" key={inputFields[2]}>
+                        <div className="upload-field song-description" key='description'>
                         <p className="field-title">Write Up</p>
                           <textarea
-                            onChange={this._handleInputChange(inputFields[2])}
+                            value={this.state.fields.description}
+                            onChange={this._handleInputChange('description')}
                             type={'text-area'}
                             placeholder="..."
                             className={'upload-song-text-area'}
                           />
                         </div>
 
-                        <div className="upload-field spotify-link" key={inputFields[6]}>
+                        <div className="upload-field spotify-link" key='spotifyLink'>
                         <p className="field-title">Spotify Link</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[6])}
+                            value={this.state.fields.spotifyLink}
+                            onChange={this._handleInputChange('spotifyLink')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
                           />
                         </div>
 
-                        <div className="upload-field soundcloud-link" key={inputFields[7]}>
+                        <div className="upload-field soundcloud-link" key='soundcloudLink'>
                         <p className="field-title">SoundCloud Link</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[7])}
+                            value={this.state.fields.soundcloudLink}
+                            onChange={this._handleInputChange('soundcloudLink')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
                           />
                         </div>
-                        <div className="upload-field soundcloud-track-id" key={inputFields[8]}>
+                        <div className="upload-field soundcloud-track-id" key='soundcloudTrackId'>
                         <p className="field-title">SoundCloud Track id</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[8])}
+                            value={this.state.fields.soundcloudTrackId}
+                            onChange={this._handleInputChange('soundcloudTrackId')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
@@ -214,38 +217,42 @@ class UploadSongForm extends Component {
                         </div>
 
 
-                        <div className="upload-field youtube-link" key={inputFields[9]}>
+                        <div className="upload-field youtube-link" key='youtubeLink'>
                         <p className="field-title">Youtube Link</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[9])}
+                            value={this.state.fieldsyoutubeLink}
+                            onChange={this._handleInputChange('youtubeLink')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
                           />
                         </div>
-                        <div className="upload-field youtube-track-id" key={inputFields[10]}>
+                        <div className="upload-field youtube-track-id" key='youtubeTrackId'>
                         <p className="field-title">Youtube Track id</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[10])}
+                            value={this.state.fields.youtubeTrackId}
+                            onChange={this._handleInputChange('youtubeTrackId')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
                           />
                         </div>
-                        <div className="upload-field bpm" key={inputFields[11]}>
+                        <div className="upload-field bpm" key='bpm'>
                         <p className="field-title">BPM</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[11])}
+                            value={this.state.fields.bpm}
+                            onChange={this._handleInputChange('bpm')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
                           />
                         </div>
 
-                        <div className="upload-field artist-location" key={inputFields[12]}>
+                        <div className="upload-field artist-location" key='artistLocation'>
                         <p className="field-title">Artist Location</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[12])}
+                            value={this.state.fields.artistLocation}
+                            onChange={this._handleInputChange('artistLocation')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
@@ -264,10 +271,11 @@ class UploadSongForm extends Component {
                           isLoading={this.state.subgenres.length == 0}
                         />
 
-                        <div className="upload-field imageUrl" key={inputFields[3]}>
+                        <div className="upload-field imageUrl" key='imageUrl'>
                         <p className="field-title">Image Url</p>
                           <input
-                            onChange={this._handleInputChange(inputFields[3])}
+                            value={this.state.fields.imageUrl}
+                            onChange={this._handleInputChange('imageUrl')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
@@ -278,13 +286,14 @@ class UploadSongForm extends Component {
                           value={'submit'}
                           className={'uploadForm__submit-button'}
                         />
+
+                        <br />
+                        {this.state.error && <p className='error'>{this.state.error}</p>}
+                        {this.state.message && <p className='message'>{this.state.message}</p>}
                       </div>
               </Fragment>
             }
           </div>
-
-          {this.state.error && <p className='error'>{this.state.error}</p>}
-          {this.state.error && <p className='message'>{this.state.message}</p>}
         </form>
       </div>
     )
