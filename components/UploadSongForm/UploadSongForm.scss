@@ -1,21 +1,44 @@
-.loginForm__wrapper {
-  margin-top: 30px;
+.upload-song-form {
+
+  .left-content {
+    width: 60%;
+    display: inline-block;
+    padding: 15px;
+}
+  .right-content {
+    width: 40%;
+    display: inline-block;
+    padding: 15px;
+    vertical-align: top;
 }
 
-.loginForm__container {
-  display: flex;
-  flex-flow: column;
+  .upload-field {
+    margin: 15px 0;
+
+    p.field-title {
+      margin: 0 0 5px 0 !important;
+    }
+
+    input.upload-song-input {
+      height: 30px;
+      width: 100%;
+      padding: 0 10px;
+    }
+
+    textarea.upload-song-text-area {
+    width: 100% !important;
+    min-height: 350px;
+    padding: 10px;
+}
+  }
+
+
+
+
 }
 
-.loginForm__input {
-  margin: 4px 0;
-  padding: 8px;
-  width: 200px;
-  height: 30px;
-  border: 1px solid #1a6ea9;
-}
 
-.loginForm__submit-button {
+.uploadForm__submit-button {
   margin-top: 2px;
   width: 218px;
   height: 42px;

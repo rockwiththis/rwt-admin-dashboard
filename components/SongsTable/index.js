@@ -12,9 +12,28 @@ import './SongsTable.scss'
 
 
 const columns = [
+      {
+        expander: true,
+        Header: "",
+        width: 40,
+        Expander: ({ isExpanded, ...rest }) =>
+          <div>
+            {isExpanded
+              ? <span>&#x2299;</span>
+              : <span>&#x2295;</span>}
+          </div>,
+        style: {
+          cursor: "pointer",
+          fontSize: 25,
+          padding: "0",
+          textAlign: "center",
+          userSelect: "none"
+        }
+      },
   {
     Header: 'Name',
     accessor: 'name',
+    width: 300,
     Cell: (row) => {
       console.log('row: ', row)
       return (<Link href={`/song/${row.original.id}`}>{row.value}</Link>)
@@ -23,6 +42,7 @@ const columns = [
   {
     Header: 'Artist',
     accessor: 'artist_name',
+    width: 250,
   },
   {
     Header: 'Curator',
@@ -32,7 +52,7 @@ const columns = [
   {
     Header: 'Tags',
     accessor: "Tags",
-    maxWidth: 200,
+    maxWidth: 400,
     Cell: (row) => {
       const subgenreList = row.original.sub_genres.map(subgenre =>
         <span className="tag-wrapper"><Link href={`/subgenre/${subgenre.id}`}>{subgenre.name}</Link>,</span>
@@ -81,6 +101,22 @@ class SongsTable extends Component {
               columns={columns}
               defaultPageSize={16}
               className="-striped -highlight table-container"
+              SubComponent={row => {
+                console.log("row", row);
+                    return (
+                      <div style={{ padding: "10px 45px" }}>
+                      <div className="sub-menu">
+                          <ul>
+                            <li><Link href={`/song/${row.original.id}`}>edit</Link></li>
+                            <li><a target="_blank" href={`http://localhost:3000/songs/${row.original.id}`}>view</a></li>
+                            <li className="delete"><Link href="/">delete</Link></li>
+                          </ul>
+                      </div>
+
+                      </div>
+                    );
+                  }}
+
             />
             </Fragment>
 

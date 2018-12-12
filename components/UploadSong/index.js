@@ -21,7 +21,7 @@ class UploadSong extends Component {
       <div className="upload-song-container">
       <div className="upload-song-header">
         <h3>Upload Song</h3>
-        <Link href="/upload">Publish</Link>
+        {/*<Link href="/upload">Publish</Link> */}
       </div>
       <UploadSongForm />
 

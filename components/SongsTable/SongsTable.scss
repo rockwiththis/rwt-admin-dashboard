@@ -1,5 +1,6 @@
 .songs-table {
   padding: 25px;
+  font-size: 14px;
 
   .songs-table-header {
 
@@ -14,6 +15,7 @@
     }
 
     a {
+        font-size: 12px;
         display: inline-block;
         padding: 4px 8px;
         margin: 0 15px;
@@ -33,4 +35,40 @@
       background: #1a6ea9;
     }
   }
+
+  span.tag-wrapper:last-of-type {
+    color: rgba(255,255,255,0);
+}
+
+ span.tag-wrapper {
+    margin-right: 5px;
+}
+
+.rt-td a {
+    color: #1a6ea9;
+}
+
+
+
+.rt-tr-group {
+  a {
+      color: #1a6ea9;
+  }
+  
+  .sub-menu ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
+
+    li {
+      display: inline-block;
+      margin: 0 10px 0 0 ;
+    }.delete {
+
+      a {
+        color: red !important;
+      }
+    }
+}
+}
 }
