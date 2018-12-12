@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import Select from 'react-select';
 import './UploadSongForm.scss'
 import SubgenresSelect from "../SubgenresSelect"
 
@@ -16,15 +17,43 @@ const defaultFields = {
   youtubeLink: '',
   youtubeTrackId: '',
   bpm: '',
-  artistLocation: ''
+  artistLocation: '',
+  selectedSubgenres: []
 }
 
 class UploadSongForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      fields: { ...defaultFields }
+      fields: { ...defaultFields },
+      subgenres: []
     }
+  }
+
+  _fetchAllSubgenres = () => {
+
+    const requestParams = {
+      headers: { "Content-Type": "application/json; charset=utf-8" }
+    }
+
+    // TODO write a little library to standardize some of this stuff
+    // (especially the urls, as these will not work in production
+    fetch("http://localhost:9292/api/subgenres", requestParams)
+      .then(response => response.json())
+      .then(subgenres => (
+          this.setState({
+            subgenres: subgenres.map(({ id, name }) => ({ value: id, label: name }))
+          })
+      ))
+      .catch(error => {
+        console.log(error);
+        this.setState({ error: error });
+        return;
+      });
+  };
+
+  componentDidMount() {
+    this._fetchAllSubgenres();
   }
 
   // componentDidMount() {
@@ -42,11 +71,24 @@ class UploadSongForm extends Component {
     });
   }
 
+  _handleSelectedSubgenresChange = selectedSubgenres => {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        selectedSubgenres
+      }
+    });
+  }
+
+  refreshForm = message => {
+    this.setState({
+      message: message,
+      fields: { ...defaultFields }
+    });
+  }
+
   _handleSubmit = (event) => {
     event.preventDefault();
-
-    const body = JSON.stringify({
-    });
 
     const requestParams = {
       method: "POST",
@@ -71,7 +113,8 @@ class UploadSongForm extends Component {
           trackId: this.state.fields.youtubeTrackId
         },
         bpm: this.state.fields.bpm,
-        artistLocation: this.state.fields.artistLocation
+        artistLocation: this.state.fields.artistLocation,
+        subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value)
       })
     };
 
@@ -80,7 +123,7 @@ class UploadSongForm extends Component {
         if (response.ok) {
           const msg = "Successfully added song"
           console.log(msg);
-          refreshForm(msg)
+          this.refreshForm(msg)
         } else {
           console.log(`Server error: ${response.statusText}`);
           this.setState({ error: response.statusText });
@@ -92,13 +135,6 @@ class UploadSongForm extends Component {
         this.setState({ error: error });
         return;
       });
-  }
-
-  refreshForm = message => {
-    this.setState({
-      message: message,
-      fields: { ...defaultFields }
-    });
   }
 
   _onKeyPress = (event) => {
@@ -141,7 +177,7 @@ class UploadSongForm extends Component {
                         <div className="upload-field song-description" key={inputFields[2]}>
                         <p className="field-title">Write Up</p>
                           <textarea
-                            onChange={this._handleInputChange(inputFields[3])}
+                            onChange={this._handleInputChange(inputFields[2])}
                             type={'text-area'}
                             placeholder="..."
                             className={'upload-song-text-area'}
@@ -215,25 +251,33 @@ class UploadSongForm extends Component {
                             className={'upload-song-input'}
                           />
                         </div>
-
                       </div>
+
                       <div className={'right-content'}>
-                      <SubgenresSelect />
 
-                      <div className="upload-field imageUrl" key={inputFields[3]}>
-                      <p className="field-title">Image Url</p>
-                        <input
-                          onChange={this._handleInputChange(inputFields[3])}
-                          type={'text'}
-                          placeholder=""
-                          className={'upload-song-input'}
+                        <p className="field-title">Subgenres</p>
+                        <Select
+                          value={this.state.selectedSubgenres}
+                          isMulti={true}
+                          onChange={this._handleSelectedSubgenresChange}
+                          options={this.state.subgenres}
+                          isLoading={this.state.subgenres.length == 0}
                         />
-                      </div>
-                      <input
-                        type={'submit'}
-                        value={'submit'}
-                        className={'uploadForm__submit-button'}
-                      />
+
+                        <div className="upload-field imageUrl" key={inputFields[3]}>
+                        <p className="field-title">Image Url</p>
+                          <input
+                            onChange={this._handleInputChange(inputFields[3])}
+                            type={'text'}
+                            placeholder=""
+                            className={'upload-song-input'}
+                          />
+                        </div>
+                        <input
+                          type={'submit'}
+                          value={'submit'}
+                          className={'uploadForm__submit-button'}
+                        />
                       </div>
               </Fragment>
             }
