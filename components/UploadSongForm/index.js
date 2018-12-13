@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import Select from 'react-select';
 import './UploadSongForm.scss'
 import ReactS3Uploader from 'react-s3-uploader'
+import redirect from '../../lib/redirect.js'
+
 
 
 
@@ -110,8 +112,8 @@ class UploadSongForm extends Component {
           link: this.state.fields.spotifyLink
         },
         soundcloud: {
-          link: this.state.fields.soundCloudLink,
-          trackId: this.state.fields.soundCloudTrackId
+          link: this.state.fields.soundcloudLink,
+          trackId: this.state.fields.soundcloudTrackId
         },
         youtube: {
           link: this.state.fields.youtubeLink,
@@ -128,7 +130,7 @@ class UploadSongForm extends Component {
         if (response.ok) {
           const msg = "Successfully added song"
           console.log(msg);
-          this.refreshForm(msg)
+          redirect({}, "/")
         } else {
           console.log(`Server error: ${response.statusText}`);
           this.setState({ error: response.statusText });

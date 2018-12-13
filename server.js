@@ -15,10 +15,10 @@ app.prepare().then(() => {
   //   return app.render(req, res, '/blog', mergedQuery);
   // });
 
-  // server.get('/song/:id', (req, res) => {
-  //   const mergedQuery = Object.assign({}, req.query, req.params);
-  //     return app.render(req, res, '/song', mergedQuery);
-  // });
+  server.get('/song/:id', (req, res) => {
+    const mergedQuery = Object.assign({}, req.query, req.params);
+      return app.render(req, res, '/song', mergedQuery);
+  });
 
   // THIS IS THE DEFAULT ROUTE, DON'T EDIT THIS
   server.get('*', (req, res) => {

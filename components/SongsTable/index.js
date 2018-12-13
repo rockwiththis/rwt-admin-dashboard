@@ -35,7 +35,6 @@ const columns = [
     accessor: 'name',
     width: 300,
     Cell: (row) => {
-      console.log('row: ', row)
       return (<Link href={`/song/${row.original.id}`}>{row.value}</Link>)
     }
   },
@@ -79,7 +78,6 @@ class SongsTable extends Component {
   async componentDidMount() {
     const res = await fetch(FETCH_ALL_SONGS_URL)
     const resJson = await res.json()
-    console.log('>> songs!', resJson);
     this.setState({ songsList: resJson })
   }
 
@@ -111,7 +109,6 @@ class SongsTable extends Component {
 
   render() {
     const { songsList } = this.state
-    console.log("songsList", songsList);
     const isLoaded = songsList.length > 0
     return (
         <div className="songs-table">
@@ -128,14 +125,13 @@ class SongsTable extends Component {
               defaultPageSize={16}
               className="-striped -highlight table-container"
               SubComponent={row => {
-                console.log("row", row);
                     return (
                       <div style={{ padding: "10px 45px" }}>
                       <div className="sub-menu">
                           <ul>
                             <li><Link href={`/song/${row.original.id}`}>edit</Link></li>
                             <li><a target="_blank" href={`http://localhost:3000/songs/${row.original.id}`}>view</a></li>
-                            <li className="delete"><button onClick={this._handleDelete(row.original)}>delete</button></li>
+                          {/*<li className="delete"><button onClick={this._handleDelete(row.original)}>delete</button></li> */}
                           </ul>
                       </div>
 
