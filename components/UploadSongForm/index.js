@@ -12,7 +12,6 @@ const defaultFields = {
   artistName: '',
   description: '',
   imageUrl: '',
-  S3ImageUrl: '',
   curatorId: '',
   createdAt: '',
   spotifyLink: '',

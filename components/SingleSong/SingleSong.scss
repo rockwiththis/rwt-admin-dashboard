@@ -39,7 +39,7 @@
     display: inline-block;
     width: 60%;
     vertical-align: top;
-    padding-top: 25px;
+    padding: 15px;
 
     h3 {
       margin-top: 0;
@@ -51,12 +51,32 @@
     width: 40%;
     vertical-align: top;
     text-align: center;
-    padding-top:  25px;
+    padding: 15px;
 
     .image-container {
       img {
          width: 250px;
       }
     }
+}
+
+.upload-field {
+  margin: 15px 0;
+
+  p.field-title {
+    margin: 0 0 5px 0 !important;
+  }
+
+  input.upload-song-input {
+    height: 30px;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  textarea.upload-song-text-area {
+  width: 100% !important;
+  min-height: 350px;
+  padding: 10px;
+}
 }
 }
