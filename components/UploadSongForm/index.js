@@ -4,15 +4,10 @@ import './UploadSongForm.scss'
 import ReactS3Uploader from 'react-s3-uploader'
 import redirect from '../../lib/redirect.js'
 
-
-
-
 const defaultFields = {
   songTitle: '',
   artistName: '',
   description: '',
-  imageUrl: '',
-  S3ImageUrl: '',
   curatorId: '',
   createdAt: '',
   spotifyLink: '',
@@ -35,7 +30,6 @@ class UploadSongForm extends Component {
     this.state = {
       fields: { ...defaultFields },
       subgenres: [],
-      file: null
     }
   }
 
@@ -108,7 +102,7 @@ class UploadSongForm extends Component {
         name: this.state.fields.songTitle,
         artistName: this.state.fields.artistName,
         description: this.state.fields.description,
-        imageUrl: this.state.fields.imageUrl,
+        imageUrl: this.state.s3ImageUrl,
         curatorId: this.state.fields.curatorId,
         spotify: {
           link: this.state.fields.spotifyLink
@@ -164,14 +158,19 @@ class UploadSongForm extends Component {
   uploadFile = formData => {
     const requestParams = {
       method: "POST",
-      body: formData,
-      headers: { "Content-Type": "multipart/form-data" }
+      body: formData
     };
     fetch("http://localhost:9292/api/s3/upload", requestParams)
       .then(response => {
         if (response.ok) {
-          const msg = "Successfully uploaded file"
-          console.log(msg);
+          const msg = "Successfully uploaded file";
+          response.json().then(data => {
+            this.setState({
+              s3ImageUrl: data.s3ImageUrl,
+              message: msg,
+              error: ''
+            });
+          });
         } else {
           console.log(`Server error: ${response.statusText}`);
           this.setState({ error: response.statusText });
@@ -180,7 +179,8 @@ class UploadSongForm extends Component {
       })
       .catch(error => {
         console.log(error);
-        this.setState({ error: error });
+        console.log(error.toString());
+        this.setState({ error: error.toString() });
         return;
       });
   }
