@@ -12,6 +12,7 @@ const defaultFields = {
   artistName: '',
   description: '',
   imageUrl: '',
+  S3ImageUrl: '',
   curatorId: '',
   createdAt: '',
   spotifyLink: '',
@@ -33,7 +34,8 @@ class UploadSongForm extends Component {
     super(props)
     this.state = {
       fields: { ...defaultFields },
-      subgenres: []
+      subgenres: [],
+      file: null
     }
   }
 
@@ -149,6 +151,62 @@ class UploadSongForm extends Component {
       this._handleSubmit(event)
     }
   }
+
+
+  handleFileUpload = (event) => {
+
+    console.log(event.target.files[0]);
+    console.log(this.state);
+  }
+
+  submitFile = (event) => {
+    event.preventDefault();
+
+    formData.append('file', this.state.file[0]);
+    axios.post(`/test-upload`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(response => {
+      // handle your response;
+    }).catch(error => {
+      // handle your error
+    });
+  }
+
+  submitFile = (event) => {
+    event.preventDefault();
+
+    const requestParams = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        file: this.state.file[0]
+      })
+    };
+
+    fetch("http://localhost:9292/api/s3/upload", requestParams)
+        .then(response => {
+          if (response.ok) {
+            const msg = "Successfully uploaded file"
+            console.log(msg);
+          } else {
+            console.log(`Server error: ${response.statusText}`);
+            this.setState({ error: response.statusText });
+          }
+          return;
+        })
+        .catch(error => {
+          console.log(error);
+          this.setState({ error: error });
+          return;
+        });
+  }
+
+
+
 
   render() {
 
@@ -303,6 +361,7 @@ class UploadSongForm extends Component {
                             className={'upload-song-input'}
                           />
                         </div>
+
                         <input
                           type={'submit'}
                           value={'submit'}
@@ -317,6 +376,10 @@ class UploadSongForm extends Component {
             }
           </div>
         </form>
+        <form onSubmit={this.submitImageFile}>
+        <input label='upload file' type='file' onChange={this.handleFileUpload} />
+        <button type='submit'>Send</button>
+      </form>
       </div>
     )
   }
