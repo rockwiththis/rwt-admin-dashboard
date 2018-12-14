@@ -159,20 +159,6 @@ class UploadSongForm extends Component {
     console.log(this.state);
   }
 
-  submitFile = (event) => {
-    event.preventDefault();
-
-    formData.append('file', this.state.file[0]);
-    axios.post(`/test-upload`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(response => {
-      // handle your response;
-    }).catch(error => {
-      // handle your error
-    });
-  }
 
   submitFile = (event) => {
     event.preventDefault();
