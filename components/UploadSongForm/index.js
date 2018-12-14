@@ -4,14 +4,14 @@ import './UploadSongForm.scss'
 import ReactS3Uploader from 'react-s3-uploader'
 import redirect from '../../lib/redirect.js'
 
-
-
-
 const defaultFields = {
   songTitle: '',
   artistName: '',
   description: '',
+<<<<<<< HEAD
   imageUrl: '',
+=======
+>>>>>>> 2b4715433b90ed8502ceb664183c3edf8a631055
   curatorId: '',
   createdAt: '',
   spotifyLink: '',
@@ -34,7 +34,6 @@ class UploadSongForm extends Component {
     this.state = {
       fields: { ...defaultFields },
       subgenres: [],
-      file: null
     }
   }
 
@@ -107,7 +106,7 @@ class UploadSongForm extends Component {
         name: this.state.fields.songTitle,
         artistName: this.state.fields.artistName,
         description: this.state.fields.description,
-        imageUrl: this.state.fields.imageUrl,
+        imageUrl: this.state.s3ImageUrl,
         curatorId: this.state.fields.curatorId,
         spotify: {
           link: this.state.fields.spotifyLink
@@ -151,47 +150,44 @@ class UploadSongForm extends Component {
     }
   }
 
-
-  handleFileUpload = (event) => {
-
-    console.log(event.target.files[0]);
-    console.log(this.state);
-  }
-
-
-  submitFile = (event) => {
+  handleFileUpload = event => {
     event.preventDefault();
 
-    const requestParams = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({
-        file: this.state.file[0]
-      })
-    };
+    const formData = new FormData();
+    formData.append('file', event.target.files[0]);
 
-    fetch("http://localhost:9292/api/s3/upload", requestParams)
-        .then(response => {
-          if (response.ok) {
-            const msg = "Successfully uploaded file"
-            console.log(msg);
-          } else {
-            console.log(`Server error: ${response.statusText}`);
-            this.setState({ error: response.statusText });
-          }
-          return;
-        })
-        .catch(error => {
-          console.log(error);
-          this.setState({ error: error });
-          return;
-        });
+    this.uploadFile(formData);
   }
 
-
-
+  uploadFile = formData => {
+    const requestParams = {
+      method: "POST",
+      body: formData
+    };
+    fetch("http://localhost:9292/api/s3/upload", requestParams)
+      .then(response => {
+        if (response.ok) {
+          const msg = "Successfully uploaded file";
+          response.json().then(data => {
+            this.setState({
+              s3ImageUrl: data.s3ImageUrl,
+              message: msg,
+              error: ''
+            });
+          });
+        } else {
+          console.log(`Server error: ${response.statusText}`);
+          this.setState({ error: response.statusText });
+        }
+        return;
+      })
+      .catch(error => {
+        console.log(error);
+        console.log(error.toString());
+        this.setState({ error: error.toString() });
+        return;
+      });
+  }
 
   render() {
 
@@ -335,16 +331,9 @@ class UploadSongForm extends Component {
                           />
                         }
 
-
-                        <div className="upload-field imageUrl" key='imageUrl'>
-                        <p className="field-title">Image Url</p>
-                          <input
-                            value={this.state.fields.imageUrl}
-                            onChange={this._handleInputChange('imageUrl')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
+                        <div className="upload-field image" key='image'>
+                          <p className="field-title">Upload Image</p>
+                          <input label='upload file' type='file' onChange={this.handleFileUpload} />
                         </div>
 
                         <input
@@ -361,10 +350,6 @@ class UploadSongForm extends Component {
             }
           </div>
         </form>
-        <form onSubmit={this.submitImageFile}>
-        <input label='upload file' type='file' onChange={this.handleFileUpload} />
-        <button type='submit'>Send</button>
-      </form>
       </div>
     )
   }
