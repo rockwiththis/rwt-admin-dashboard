@@ -8,10 +8,6 @@ const defaultFields = {
   songTitle: '',
   artistName: '',
   description: '',
-<<<<<<< HEAD
-  imageUrl: '',
-=======
->>>>>>> 2b4715433b90ed8502ceb664183c3edf8a631055
   curatorId: '',
   createdAt: '',
   spotifyLink: '',
