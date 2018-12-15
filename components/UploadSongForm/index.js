@@ -256,6 +256,7 @@ class UploadSongForm extends Component {
                             type={'text-area'}
                             placeholder="..."
                             className={'upload-song-text-area'}
+                            wrap="hard"
                           />
                         </div>
 
