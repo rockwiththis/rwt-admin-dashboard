@@ -3,6 +3,8 @@ import Select from 'react-select';
 import './UploadSongForm.scss'
 import ReactS3Uploader from 'react-s3-uploader'
 import redirect from '../../lib/redirect.js'
+import Datetime from 'react-datetime'
+
 
 const defaultFields = {
   songTitle: '',
@@ -16,6 +18,7 @@ const defaultFields = {
   youtubeLink: '',
   youtubeTrackId: '',
   bpm: '',
+  createdAt:'',
   artistLocation: '',
   selectedSubgenres: []
 }
@@ -66,6 +69,7 @@ class UploadSongForm extends Component {
 
 
   _handleInputChange = inputName => event => {
+
     this.setState({
       fields: {
         ...this.state.fields,
@@ -73,14 +77,27 @@ class UploadSongForm extends Component {
       }
     });
   }
+  _handleDateInputChange = inputName => event => {
+    console.log(event._d);
+
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        createdAt: event._d
+      }
+    });
+  }
 
   _handleSelectedSubgenresChange = selectedSubgenres => {
+    console.log(selectedSubgenres);
     this.setState({
       fields: {
         ...this.state.fields,
         selectedSubgenres
       }
     });
+
+    console.log(this.state.fields);
   }
 
   refreshForm = message => {
@@ -116,6 +133,7 @@ class UploadSongForm extends Component {
           trackId: this.state.fields.youtubeTrackId
         },
         bpm: this.state.fields.bpm,
+        createdAt: this.state.fields.createdAt,
         artistLocation: this.state.fields.artistLocation,
         subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value)
       })
@@ -219,6 +237,16 @@ class UploadSongForm extends Component {
                             className={'upload-song-input'}
                           />
                         </div>
+                        <div className="upload-field curator-id" key='curator-id'>
+                        <p className="field-title">Curator id</p>
+                          <input
+                            value={this.state.fields.curatorId}
+                            onChange={this._handleInputChange('curatorId')}
+                            type={'text'}
+                            placeholder=""
+                            className={'upload-song-input'}
+                          />
+                        </div>
 
                         <div className="upload-field song-description" key='description'>
                         <p className="field-title">Write Up</p>
@@ -228,6 +256,7 @@ class UploadSongForm extends Component {
                             type={'text-area'}
                             placeholder="..."
                             className={'upload-song-text-area'}
+                            wrap="hard"
                           />
                         </div>
 
@@ -326,7 +355,13 @@ class UploadSongForm extends Component {
                             options={placeholderSubgenres}
                           />
                         }
-
+                        <div className="upload-field createdAt">
+                        <p className="field-title">Published at</p>
+                          <Datetime
+                          value={this.state.fields.createdAt}
+                          onChange={this._handleDateInputChange()}
+                          />
+                        </div>
                         <div className="upload-field image" key='image'>
                           <p className="field-title">Upload Image</p>
                           <input label='upload file' type='file' onChange={this.handleFileUpload} />

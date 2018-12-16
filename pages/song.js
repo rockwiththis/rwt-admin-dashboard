@@ -6,19 +6,24 @@ import 'react-table/react-table.css'
 import { FETCH_ALL_SONGS_URL } from '../api/urls'
 import Moment from 'react-moment'
 import SingleSong from '../components/SingleSong'
+import Loading from '../components/Loading'
 
 
 class SongPage extends Component {
+
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      singleSong: null,
+    }
+  }
 
   static async getInitialProps({ query }) {
     const songId = query
     console.log("songId", songId);
     return { songId }
 
-  }
-
-  state = {
-    singleSong: [],
   }
 
 
@@ -33,6 +38,7 @@ class SongPage extends Component {
 
   render() {
     const song  = this.state.singleSong
+    console.log(this.state.singleSong);
 
     return (
       <div>
@@ -41,7 +47,7 @@ class SongPage extends Component {
             <SingleSong song={song} />
           )
           : (
-            'loading...'
+            <Loading />
           )}
 
       </div>
