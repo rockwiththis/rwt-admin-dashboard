@@ -5,7 +5,6 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-
 app.prepare().then(() => {
   const server = express();
 
@@ -17,7 +16,7 @@ app.prepare().then(() => {
 
   server.get('/song/:id', (req, res) => {
     const mergedQuery = Object.assign({}, req.query, req.params);
-      return app.render(req, res, '/song', mergedQuery);
+    return app.render(req, res, '/song', mergedQuery);
   });
 
   // THIS IS THE DEFAULT ROUTE, DON'T EDIT THIS
