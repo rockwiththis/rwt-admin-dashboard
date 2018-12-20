@@ -110,6 +110,8 @@ class UploadSongForm extends Component {
   _handleSubmit = (event) => {
     event.preventDefault();
 
+    const description = this.state.fields.description.replace(/\r?\n/g, '<br />')
+
     const requestParams = {
       method: "POST",
       headers: {
@@ -118,7 +120,7 @@ class UploadSongForm extends Component {
       body: JSON.stringify({
         name: this.state.fields.songTitle,
         artistName: this.state.fields.artistName,
-        description: this.state.fields.description,
+        description: description,
         imageUrl: this.state.s3ImageUrl,
         curatorId: this.state.fields.curatorId,
         spotify: {
@@ -255,6 +257,7 @@ class UploadSongForm extends Component {
                             onChange={this._handleInputChange('description')}
                             type={'text-area'}
                             placeholder="..."
+                            col="20"
                             className={'upload-song-text-area'}
                             wrap="hard"
                           />
