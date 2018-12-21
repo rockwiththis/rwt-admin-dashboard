@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Link from 'next/link'
 import './SingleSong.scss'
 import Loading from '../Loading'
+import Cookie from 'js-cookie'
 import Select from 'react-select';
 
 

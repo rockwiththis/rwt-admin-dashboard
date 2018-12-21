@@ -4,6 +4,7 @@ import './UploadSongForm.scss'
 import ReactS3Uploader from 'react-s3-uploader'
 import redirect from '../../lib/redirect.js'
 import Datetime from 'react-datetime'
+import Cookie from 'js-cookie'
 
 
 const defaultFields = {
