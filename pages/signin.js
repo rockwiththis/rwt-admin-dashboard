@@ -42,6 +42,7 @@ class SignIn extends Component {
             if (!!response.sessionKey) {
               console.log("Successfully signed in");
               Cookie.set('rwt-session-key', response.sessionKey);
+              Cookie.set('rwt-session-username', this.state.username);
               return Router.push('/');
             } else {
               this.setState({ error: response.error });

@@ -8,13 +8,11 @@ const authenticate = () => {
     headers: { "Content-Type": "application/json; charset=utf-8" },
     body: JSON.stringify({
       sessionKey: Cookie.get('rwt-session-key'),
+      username: Cookie.get('rwt-session-username')
     })
   };
   return fetch("http://localhost:9292/api/users/authenticate", requestParams)
-    .then(response => {
-      console.log(response);
-      return response.ok && response.json()
-    })
+    .then(response => response.ok && response.json())
 };
 
 export default WrappedComponent => (
@@ -30,7 +28,6 @@ export default WrappedComponent => (
       componentDidMount() {
         authenticate()
           .then(response => {
-            console.log(response);
             if (response.isAuthenticated) {
               this.setState({ processingAuth: false })
             } else {
