@@ -7,6 +7,7 @@ import { FETCH_ALL_SONGS_URL } from '../api/urls'
 import Moment from 'react-moment'
 import SingleSong from '../components/SingleSong'
 import Loading from '../components/Loading'
+import RequireAuth from '../hoc/RequireAuth'
 
 
 class SongPage extends Component {
@@ -55,4 +56,4 @@ class SongPage extends Component {
   }
 }
 
-export default SongPage
+export default RequireAuth(SongPage)

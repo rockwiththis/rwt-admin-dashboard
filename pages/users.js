@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import fetch from 'isomorphic-unfetch'
 import ReactTable from "react-table";
 import { FETCH_ALL_SONGS_URL } from '../api/urls'
+import RequireAuth from '../hoc/RequireAuth'
 
 
 const columns = [
@@ -50,4 +51,4 @@ class UsersPage extends Component {
   }
 }
 
-export default UsersPage
+export default RequireAuth(UsersPage)
