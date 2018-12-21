@@ -25,6 +25,10 @@ export default WrappedComponent => (
         }
       }
 
+      static async getInitialProps({ query }) {
+        return query
+      }
+
       componentDidMount() {
         authenticate()
           .then(response => {

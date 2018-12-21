@@ -20,17 +20,9 @@ class SongPage extends Component {
     }
   }
 
-  static async getInitialProps({ query }) {
-    const songId = query
-    console.log("songId", songId);
-    return { songId }
-
-  }
-
-
   async componentDidMount() {
-    const { songId } = this.props
-    const res = await fetch(`http://localhost:9292/api/songs/${songId.id}`)
+    const songId = this.props.id
+    const res = await fetch(`http://localhost:9292/api/songs/${songId}`)
     const resJson = await res.json()
     console.log('>> single song!', resJson);
     this.setState({ singleSong: resJson })
