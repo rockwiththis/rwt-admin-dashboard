@@ -1,5 +1,6 @@
 import React from 'react'
 import UploadSong from '../components/UploadSong'
+import RequireAuth from '../hoc/RequireAuth'
 
 
 const Upload = () => (
@@ -8,4 +9,4 @@ const Upload = () => (
   </div>
 )
 
-export default Upload
+export default RequireAuth(Upload)
