@@ -135,7 +135,9 @@ class UploadSongForm extends Component {
         bpm: this.state.fields.bpm,
         createdAt: this.state.fields.createdAt,
         artistLocation: this.state.fields.artistLocation,
-        subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value)
+        subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
+        sessionKey: Cookie.get('rwt-session-key'),
+        username: Cookie.get('rwt-session-username')
       })
     };
 
