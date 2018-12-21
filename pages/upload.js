@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { Component } from 'react'
 import UploadSong from '../components/UploadSong'
 import RequireAuth from '../hoc/RequireAuth'
 
-
-const Upload = () => (
-  <div>
-      <UploadSong />
-  </div>
-)
+class Upload extends Component {
+  render() {
+    return (
+      <div>
+          <UploadSong />
+      </div>
+    );
+  }
+}
 
 export default RequireAuth(Upload)

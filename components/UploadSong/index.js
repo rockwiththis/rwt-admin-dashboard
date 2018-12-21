@@ -13,19 +13,12 @@ class UploadSong extends Component {
 
   render() {
 
-    const {
-      song,
-    } = this.props
-
     return (
       <div className="upload-song-container">
-      <div className="upload-song-header">
-        <h3>Upload Song</h3>
-        {/*<Link href="/upload">Publish</Link> */}
-      </div>
-      <UploadSongForm />
-
-
+        <div className="upload-song-header">
+          <h3>Upload Song</h3>
+        </div>
+        <UploadSongForm />
       </div>
     )
   }
