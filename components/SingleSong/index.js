@@ -123,14 +123,16 @@ _handleSubmit = (event) => {
       },
       bpm: this.state.fields.bpm,
       artistLocation: this.state.fields.artistLocation,
-      subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value)
+      subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
+      sessionKey: Cookie.get('rwt-session-key'),
+      username: Cookie.get('rwt-session-username')
     })
   };
 
   fetch(`http://localhost:9292/api/songs/${this.state.songId}`, requestParams)
     .then(response => {
       if (response.ok) {
-        const msg = "Successfully added song"
+        const msg = "Successfully edited song"
         console.log(msg);
         window.location.reload()
       } else {

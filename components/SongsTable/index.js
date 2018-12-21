@@ -85,7 +85,11 @@ class SongsTable extends Component {
   _handleDelete = (song) => {
 
     const requestParams = {
-      method: "DELETE"
+      method: "DELETE",
+      body: JSON.stringify({
+        sessionKey: Cookie.get('rwt-session-key'),
+        username: Cookie.get('rwt-session-username')
+      })
     };
 
     fetch(`http://localhost:9292/api/songs/${song.id}`, requestParams)

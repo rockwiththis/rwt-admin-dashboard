@@ -5,7 +5,7 @@ import Link from 'next/link'
 import 'react-table/react-table.css'
 import { FETCH_ALL_SONGS_URL } from '../api/urls'
 import Moment from 'react-moment'
-
+import RequireAuth from '../hoc/RequireAuth'
 
 
 const columns = [
@@ -86,4 +86,4 @@ class SongsPage extends Component {
   }
 }
 
-export default SongsPage
+export default RequireAuth(SongsPage)

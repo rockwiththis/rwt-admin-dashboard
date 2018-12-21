@@ -3,6 +3,7 @@ import fetch from 'isomorphic-unfetch'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import { FETCH_ALL_SONGS_URL } from '../api/urls'
+import RequireAuth from '../hoc/RequireAuth'
 
 
 const columns = [
@@ -78,4 +79,4 @@ class SongsPage extends Component {
   }
 }
 
-export default SongsPage
+export default RequireAuth(SongsPage)
