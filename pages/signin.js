@@ -35,21 +35,21 @@ class SignIn extends Component {
         password: this.state.password
       })
     };
-    fetch("http://localhost:9292/api/users/signin", requestParams)
-      .then(rawResponse => {
+    return fetch("http://localhost:9292/api/users/signin", requestParams)
+      .then(rawResponse => (
         rawResponse.json()
           .then(response => {
             if (!!response.sessionKey) {
               console.log("Successfully signed in");
               Cookie.set('rwt-session-key', response.sessionKey);
-              Router.push('/');
+              return Router.push('/');
             } else {
               this.setState({ error: response.error });
+              return;
             }
-            return;
           })
           .catch(() => this.setState({ error: `Server error: ${rawResponse.statusText}` }))
-      })
+      ))
       .catch(error => {
         console.log(error);
         this.setState({ error: "Unexpected error connecting to server" });
