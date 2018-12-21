@@ -296,7 +296,8 @@ console.log("song", this.state);
 
 
                             <div className="upload-field imageUrl" key='imageUrl'>
-                            <p className="field-title">Image Url</p>
+                            <img className="song-img-preview" src={this.state.fields.imageUrl} />
+                            <p className="field-title">Image</p>
                               <input
                                 value={this.state.fields.imageUrl}
                                 onChange={this._handleInputChange('imageUrl')}
