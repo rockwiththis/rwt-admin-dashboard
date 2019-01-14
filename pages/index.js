@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import SongsTable from '../components/SongsTable'
 import { checkLoggedIn } from '../api/auth/cognito'
-
+import RequireAuth from '../hoc/RequireAuth'
 
 class Home extends Component {
   render() {
     return (
       <div>
-        <SongsTable  />
+        <SongsTable />
       </div>
     );
   }
 }
 
-export default Home
+export default RequireAuth(Home)

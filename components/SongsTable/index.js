@@ -6,6 +6,7 @@ import 'react-table/react-table.css'
 import { FETCH_ALL_SONGS_URL } from '../../api/urls'
 import Moment from 'react-moment'
 import Loading from '../Loading'
+import Cookie from 'js-cookie'
 import './SongsTable.scss'
 
 
@@ -85,7 +86,11 @@ class SongsTable extends Component {
   _handleDelete = (song) => {
 
     const requestParams = {
-      method: "DELETE"
+      method: "DELETE",
+      body: JSON.stringify({
+        sessionKey: Cookie.get('rwt-session-key'),
+        username: Cookie.get('rwt-session-username')
+      })
     };
 
     fetch(`http://localhost:9292/api/songs/${song.id}`, requestParams)
