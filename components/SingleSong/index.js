@@ -11,10 +11,7 @@ class SingleSong extends Component {
   constructor(props) {
     super(props)
 
-    const {
-      song,
-    } = this.props
-
+    const { song } = this.props
     this.state = {
       fields: {
         songId: song.id,
@@ -22,7 +19,6 @@ class SingleSong extends Component {
         artistName: song.artist_name,
         description: song.description,
         imageUrl: song.image_url,
-        curatorId: song.curator_id,
         createdAt: song.created_at,
         spotifyLink: song.spotify_link,
         soundcloudLink: song.soundcloud_link,
@@ -32,27 +28,27 @@ class SingleSong extends Component {
         bpm: song.bpm,
         artistLocation: song.artist_location,
         subgenreIds: song.sub_genres.map(({ id, name }) => ({ value: id, label: name })),
-        selectedSubgenres: song.sub_genres.map(({ id, name }) => ({ value: id, label: name }))
+        selectedSubgenres: song.sub_genres.map(({ id, name }) => ({ value: id, label: name })),
+        selectedCurator: {
+          value: song.curator_id,
+          label: `${song.curator_first_name} ${song.curator_last_name}`
+        }
       },
       subgenres: [],
+      curators: [],
       file: null
     }
   }
 
-
   componentDidMount() {
     this._fetchAllSubgenres();
-    console.log("this.state.selectedSubgenres", this.state.fields.selectedSubgenres);
-    console.log("this.state", this.state);
+    this._fetchAllCurators();
   }
 
-
-  _fetchAllSubgenres = () => {
-
+  _fetchAllSubgenres = async () => {
     const requestParams = {
       headers: { "Content-Type": "application/json; charset=utf-8" }
     }
-
     // TODO write a little library to standardize some of this stuff
     // (especially the urls, as these will not work in production
     fetch("http://localhost:9292/api/subgenres", requestParams)
@@ -69,100 +65,122 @@ class SingleSong extends Component {
       });
   };
 
+  _fetchAllCurators = async () => {
+    const requestParams = {
+      headers: { "Content-Type": "application/json; charset=utf-8" }
+    }
+    // TODO write a little library to standardize some of this stuff
+    // (especially the urls, as these will not work in production
+    fetch("http://localhost:9292/api/curators", requestParams)
+      .then(response => response.json())
+      .then(curators => (
+          this.setState({
+            curators: curators.map(({ id, first_name, last_name }) => ({ value: id, label: `${first_name} ${last_name}` }))
+          })
+      ))
+      .catch(error => {
+        console.log(error);
+        this.setState({ error: error });
+        return;
+      });
+  };
 
 
   _handleInputChange = inputName => event => {
-  this.setState({
-    fields: {
-      ...this.state.fields,
-      [inputName]: event.target.value
-    }
-  });
-}
-
-_handleSelectedSubgenresChange = selectedSubgenres => {
-  this.setState({
-    fields: {
-      ...this.state.fields,
-      selectedSubgenres
-    }
-  });
-}
-
-// refreshForm = message => {
-//   this.setState({
-//     message: message,
-//     fields: { ...defaultFields }
-//   });
-// }
-
-_handleSubmit = (event) => {
-  event.preventDefault();
-
-  const requestParams = {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-    body: JSON.stringify({
-      name: this.state.fields.songTitle,
-      artistName: this.state.fields.artistName,
-      description: this.state.fields.description,
-      imageUrl: this.state.fields.imageUrl,
-      curatorId: this.state.fields.curatorId,
-      spotify: {
-        link: this.state.fields.spotifyLink
-      },
-      soundcloud: {
-        link: this.state.fields.soundcloudLink,
-        trackId: this.state.fields.soundcloudTrackId
-      },
-      youtube: {
-        link: this.state.fields.youtubeLink,
-        trackId: this.state.fields.youtubeTrackId
-      },
-      bpm: this.state.fields.bpm,
-      artistLocation: this.state.fields.artistLocation,
-      subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
-      sessionKey: Cookie.get('rwt-session-key'),
-      username: Cookie.get('rwt-session-username')
-    })
-  };
-
-  console.log("SONGID",this.state.fields.songId);
-
-  fetch(`http://localhost:9292/api/songs/${this.state.fields.songId}`, requestParams)
-    .then(response => {
-      if (response.ok) {
-        const msg = "Successfully edited song"
-        console.log(msg);
-        window.location.reload()
-      } else {
-        console.log(`Server error: ${response.statusText}`);
-        this.setState({ error: response.statusText });
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        [inputName]: event.target.value
       }
-      return;
-    })
-    .catch(error => {
-      console.log(error);
-      this.setState({ error: error });
-      return;
     });
-}
-
-_onKeyPress = (event) => {
-  if (event.key === 'Enter') {
-    this._handleSubmit(event)
   }
-}
+
+  _handleSelectedSubgenresChange = selectedSubgenres => {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        selectedSubgenres
+      }
+    });
+  }
+
+  _handleSelectedCuratorChange = selectedCurator => {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        selectedCurator
+      }
+    });
+  }
+
+  // refreshForm = message => {
+  //   this.setState({
+  //     message: message,
+  //     fields: { ...defaultFields }
+  //   });
+  // }
+
+  _handleSubmit = (event) => {
+    event.preventDefault();
+
+    const requestParams = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        name: this.state.fields.songTitle,
+        artistName: this.state.fields.artistName,
+        description: this.state.fields.description,
+        imageUrl: this.state.fields.imageUrl,
+        curatorId: this.state.fields.selectedCurator.value,
+        spotify: {
+          link: this.state.fields.spotifyLink
+        },
+        soundcloud: {
+          link: this.state.fields.soundcloudLink,
+          trackId: this.state.fields.soundcloudTrackId
+        },
+        youtube: {
+          link: this.state.fields.youtubeLink,
+          trackId: this.state.fields.youtubeTrackId
+        },
+        bpm: this.state.fields.bpm,
+        artistLocation: this.state.fields.artistLocation,
+        subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
+        sessionKey: Cookie.get('rwt-session-key'),
+        username: Cookie.get('rwt-session-username')
+      })
+    };
+
+    fetch(`http://localhost:9292/api/songs/${this.state.fields.songId}`, requestParams)
+      .then(response => {
+        if (response.ok) {
+          const msg = "Successfully edited song"
+          console.log(msg);
+          window.location.reload()
+        } else {
+          console.log(`Server error: ${response.statusText}`);
+          this.setState({ error: response.statusText });
+        }
+        return;
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ error: error });
+        return;
+      });
+  }
+
+  _onKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this._handleSubmit(event)
+    }
+  }
 
   render() {
+    const { song } = this.props;
 
-    const {
-      song,
-    } = this.props
-
-console.log("song", this.state);
     return (
       <div className="singlesong-container">
           <div className="singlesong-header">
@@ -245,7 +263,7 @@ console.log("song", this.state);
                             <div className="upload-field youtube-link" key='youtubeLink'>
                             <p className="field-title">Youtube Link</p>
                               <input
-                                value={this.state.fieldsyoutubeLink}
+                                value={this.state.fields.youtubeLink}
                                 onChange={this._handleInputChange('youtubeLink')}
                                 type={'text'}
                                 placeholder=""
@@ -287,17 +305,20 @@ console.log("song", this.state);
 
                           <div className={'right-content'}>
 
+                            <p className="field-title">Curator</p>
+                            <Select
+                              value={this.state.fields.selectedCurator}
+                              onChange={this._handleSelectedCuratorChange}
+                              options={this.state.curators}
+                            />
+
                             <p className="field-title">Subgenres</p>
-
-
-                              <Select
-                                value={this.state.fields.selectedSubgenres}
-                                isMulti={true}
-                                onChange={this._handleSelectedSubgenresChange}
-                                options={this.state.subgenres}
-                              />
-
-
+                            <Select
+                              value={this.state.fields.selectedSubgenres}
+                              isMulti={true}
+                              onChange={this._handleSelectedSubgenresChange}
+                              options={this.state.subgenres}
+                            />
 
                             <div className="upload-field imageUrl" key='imageUrl'>
                             <img className="song-img-preview" src={this.state.fields.imageUrl} />
