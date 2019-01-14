@@ -15,7 +15,6 @@ class SingleSong extends Component {
       song,
     } = this.props
 
-
     this.state = {
       fields: {
         songId: song.id,
@@ -130,7 +129,9 @@ _handleSubmit = (event) => {
     })
   };
 
-  fetch(`http://localhost:9292/api/songs/${this.state.songId}`, requestParams)
+  console.log("SONGID",this.state.fields.songId);
+
+  fetch(`http://localhost:9292/api/songs/${this.state.fields.songId}`, requestParams)
     .then(response => {
       if (response.ok) {
         const msg = "Successfully edited song"
