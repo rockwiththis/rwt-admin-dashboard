@@ -11,7 +11,6 @@ const defaultFields = {
   songTitle: '',
   artistName: '',
   description: '',
-  curatorId: '',
   createdAt: '',
   spotifyLink: '',
   soundcloudLink: '',
@@ -21,12 +20,9 @@ const defaultFields = {
   bpm: '',
   createdAt:'',
   artistLocation: '',
-  selectedSubgenres: []
+  selectedSubgenres: [],
+  selectedCurator: {}
 }
-
-const placeholderSubgenres = [
-  { value: 'Subgenre', label: 'Subgenre' },
-];
 
 class UploadSongForm extends Component {
   constructor(props) {
@@ -34,15 +30,14 @@ class UploadSongForm extends Component {
     this.state = {
       fields: { ...defaultFields },
       subgenres: [],
+      curators: []
     }
   }
 
-  _fetchAllSubgenres = () => {
-
+  _fetchAllSubgenres = async () => {
     const requestParams = {
       headers: { "Content-Type": "application/json; charset=utf-8" }
     }
-
     // TODO write a little library to standardize some of this stuff
     // (especially the urls, as these will not work in production
     fetch("http://localhost:9292/api/subgenres", requestParams)
@@ -59,8 +54,30 @@ class UploadSongForm extends Component {
       });
   };
 
+  _fetchAllCurators = async () => {
+    const requestParams = {
+      headers: { "Content-Type": "application/json; charset=utf-8" }
+    }
+    // TODO write a little library to standardize some of this stuff
+    // (especially the urls, as these will not work in production
+    fetch("http://localhost:9292/api/curators", requestParams)
+      .then(response => response.json())
+      .then(curators => (
+          this.setState({
+            curators: curators.map(({ id, first_name, last_name }) => ({ value: id, label: `${first_name} ${last_name}` }))
+          })
+      ))
+      .catch(error => {
+        console.log(error);
+        this.setState({ error: error });
+        return;
+      });
+  };
+
+
   componentDidMount() {
     this._fetchAllSubgenres();
+    this._fetchAllCurators();
   }
 
   // componentDidMount() {
@@ -78,6 +95,7 @@ class UploadSongForm extends Component {
       }
     });
   }
+
   _handleDateInputChange = inputName => event => {
     console.log(event._d);
 
@@ -90,15 +108,21 @@ class UploadSongForm extends Component {
   }
 
   _handleSelectedSubgenresChange = selectedSubgenres => {
-    console.log(selectedSubgenres);
     this.setState({
       fields: {
         ...this.state.fields,
         selectedSubgenres
       }
     });
+  }
 
-    console.log(this.state.fields);
+  _handleSelectedCuratorChange = selectedCurator => {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        selectedCurator
+      }
+    });
   }
 
   refreshForm = message => {
@@ -123,7 +147,7 @@ class UploadSongForm extends Component {
         artistName: this.state.fields.artistName,
         description: description,
         imageUrl: this.state.s3ImageUrl,
-        curatorId: this.state.fields.curatorId,
+        curatorId: this.state.fields.selectedCurator.value,
         spotify: {
           link: this.state.fields.spotifyLink
         },
@@ -161,12 +185,6 @@ class UploadSongForm extends Component {
         this.setState({ error: error });
         return;
       });
-  }
-
-  _onKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      this._handleSubmit(event)
-    }
   }
 
   handleFileUpload = event => {
@@ -215,7 +233,7 @@ class UploadSongForm extends Component {
 
 
     return (
-      <div className={'song-container'} onKeyPress={this._onKeyPress}>
+      <div className={'song-container'}>
         <form onSubmit={this._handleSubmit}>
           <div className={'upload-song-form'}>
             {
@@ -237,16 +255,6 @@ class UploadSongForm extends Component {
                           <input
                             value={this.state.fields.artistName}
                             onChange={this._handleInputChange('artistName')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
-                        <div className="upload-field curator-id" key='curator-id'>
-                        <p className="field-title">Curator id</p>
-                          <input
-                            value={this.state.fields.curatorId}
-                            onChange={this._handleInputChange('curatorId')}
                             type={'text'}
                             placeholder=""
                             className={'upload-song-input'}
@@ -344,23 +352,23 @@ class UploadSongForm extends Component {
 
                       <div className={'right-content'}>
 
-                        <p className="field-title">Subgenres</p>
-
-                        {
-                          this.state.subgenres.length > 0 ?
+                        <div className="upload-field curator-id" key='curator-id'>
+                          <p className="field-title">Curator</p>
                           <Select
-                            value={this.state.selectedSubgenres}
-                            isMulti={true}
-                            onChange={this._handleSelectedSubgenresChange}
-                            options={this.state.subgenres}
-                          /> :
-                          <Select
-                            value={this.state.selectedSubgenres}
-                            isMulti={true}
-                            onChange={this._handleSelectedSubgenresChange}
-                            options={placeholderSubgenres}
+                            value={this.state.fields.selectedCurator}
+                            onChange={this._handleSelectedCuratorChange}
+                            options={this.state.curators}
                           />
-                        }
+                        </div>
+
+                        <p className="field-title">Subgenres</p>
+                        <Select
+                          value={this.state.selectedSubgenres}
+                          isMulti={true}
+                          onChange={this._handleSelectedSubgenresChange}
+                          options={this.state.subgenres}
+                        />
+
                         <div className="upload-field createdAt">
                         <p className="field-title">Published at</p>
                           <Datetime
