@@ -187,50 +187,57 @@ class UploadSongForm extends Component {
       });
   }
 
-  handleFileUpload = event => {
+  handleImageFileUpload = event => {
     event.preventDefault();
-
-    const formData = new FormData();
-    formData.append('file', event.target.files[0]);
-
-    this.uploadFile(formData);
+    this.uploadS3File(event.target.files[0], 'image')
+      .then(({ s3ImageUrl }) => this.setState({ s3ImageUrl }));
   }
 
-  uploadFile = formData => {
+  handleSongFileUpload = event => {
+    event.preventDefault();
+    this.uploadS3File(event.target.files[0], 'song')
+      .then(({ s3SongName }) => this.setState({ s3SongName }));
+  }
+
+  uploadS3File = (fileData, type) => {
+
+    const formData = new FormData();
+    formData.append('file', fileData);
+    formData.append('fileName', fileData.name);
+
     const requestParams = {
-      method: "POST",
+      method: 'POST',
       body: formData
     };
-    fetch("http://localhost:9292/api/s3/upload", requestParams)
+
+    return fetch('http://localhost:9292/api/s3/upload/' + type, requestParams)
       .then(response => {
         if (response.ok) {
-          const msg = "Successfully uploaded file";
-          response.json().then(data => {
+          return response.json().then(data => {
+            console.log(data);
             this.setState({
-              s3ImageUrl: data.s3ImageUrl,
-              message: msg,
+              message: `Successfully uploaded ${type}`,
               error: ''
             });
+            return data
           });
         } else {
           console.log(`Server error: ${response.statusText}`);
           this.setState({ error: response.statusText });
+          return null;
         }
-        return;
       })
       .catch(error => {
         console.log(error);
         console.log(error.toString());
         this.setState({ error: error.toString() });
-        return;
+        return null;
       });
   }
 
   render() {
-
     const { subgenres, selectedSubgenres } = this.state;
     const isLoaded = subgenres.length > 0
-
 
     return (
       <div className={'song-container'}>
@@ -376,11 +383,16 @@ class UploadSongForm extends Component {
                           onChange={this._handleDateInputChange()}
                           />
                         </div>
-                        <div className="upload-field image" key='image'>
-                        <img className="song-img-preview" src={this.state.s3ImageUrl} />
 
+                        <div className="upload-field image" key='image'>
+                          <img className="song-img-preview" src={this.state.s3ImageUrl} />
                           <p className="field-title">Upload Image</p>
-                          <input label='upload file' type='file' onChange={this.handleFileUpload} />
+                          <input label='upload file' type='file' onChange={this.handleImageFileUpload} />
+                        </div>
+
+                        <div className="upload-field song" key='song'>
+                          <p className="field-title">Upload Song</p>
+                          <input label='upload file' type='file' onChange={this.handleSongFileUpload} />
                         </div>
 
                         <input
