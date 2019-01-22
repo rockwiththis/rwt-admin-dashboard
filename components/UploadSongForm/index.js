@@ -147,6 +147,7 @@ class UploadSongForm extends Component {
         artistName: this.state.fields.artistName,
         description: description,
         imageUrl: this.state.s3ImageUrl,
+        songName: this.state.s3SongName,
         curatorId: this.state.fields.selectedCurator.value,
         spotify: {
           link: this.state.fields.spotifyLink
@@ -190,13 +191,13 @@ class UploadSongForm extends Component {
   handleImageFileUpload = event => {
     event.preventDefault();
     this.uploadS3File(event.target.files[0], 'image')
-      .then(({ s3ImageUrl }) => this.setState({ s3ImageUrl }));
+      .then(res => !!res.s3ImageUrl && this.setState({ s3ImageUrl: res.s3ImageUrl }));
   }
 
   handleSongFileUpload = event => {
     event.preventDefault();
     this.uploadS3File(event.target.files[0], 'song')
-      .then(({ s3SongName }) => this.setState({ s3SongName }));
+      .then(res => !!res.s3SongName && this.setState({ s3SongName: res.s3SongName }));
   }
 
   uploadS3File = (fileData, type) => {
