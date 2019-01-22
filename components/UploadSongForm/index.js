@@ -147,7 +147,7 @@ class UploadSongForm extends Component {
         artistName: this.state.fields.artistName,
         description: description,
         imageUrl: this.state.s3ImageUrl,
-        songName: this.state.s3SongName,
+        songFileName: this.state.s3SongName,
         curatorId: this.state.fields.selectedCurator.value,
         spotify: {
           link: this.state.fields.spotifyLink
