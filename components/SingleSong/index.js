@@ -33,7 +33,8 @@ class SingleSong extends Component {
         selectedCurator: {
           value: song.curator_id,
           label: `${song.curator_first_name} ${song.curator_last_name}`
-        }
+        },
+        isHidden: song.hidden
       },
       subgenres: [],
       curators: [],
@@ -114,6 +115,13 @@ class SingleSong extends Component {
     });
   }
 
+  _handleIsHiddenChange = event => this.setState({
+    fields: {
+      ...this.state.fields,
+      isHidden: event.target.checked
+    }
+  });
+
   // refreshForm = message => {
   //   this.setState({
   //     message: message,
@@ -150,6 +158,7 @@ class SingleSong extends Component {
         bpm: this.state.fields.bpm,
         artistLocation: this.state.fields.artistLocation,
         subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
+        hidden: this.state.fields.isHidden,
         sessionKey: Cookie.get('rwt-session-key'),
         username: Cookie.get('rwt-session-username')
       })
@@ -371,9 +380,18 @@ class SingleSong extends Component {
                         className={'upload-song-input'}
                       />
                     </div>
+
+                    { /* TODO make this less fugly */ }
+                    <p className="field-title">Is Hidden</p>
+                    <input
+                      name="Is Hidden"
+                      type="checkbox"
+                      checked={this.state.fields.isHidden}
+                      onChange={this._handleIsHiddenChange}
+                    />
                   </div>
 
-                  <div className={'right-content'}>
+                  <div className="right-content">
 
                     <p className="field-title">Curator</p>
                     <Select
