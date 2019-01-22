@@ -34,7 +34,8 @@ class SingleSong extends Component {
           value: song.curator_id,
           label: `${song.curator_first_name} ${song.curator_last_name}`
         },
-        isHidden: song.hidden
+        isHidden: song.hidden,
+        moments: song.moments
       },
       subgenres: [],
       curators: [],
@@ -45,6 +46,7 @@ class SingleSong extends Component {
   componentDidMount() {
     this._fetchAllSubgenres();
     this._fetchAllCurators();
+    console.log(this.state);
   }
 
   _fetchAllSubgenres = async () => {
@@ -159,6 +161,7 @@ class SingleSong extends Component {
         artistLocation: this.state.fields.artistLocation,
         subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
         hidden: this.state.fields.isHidden,
+        moments: this.state.fields.moments,
         sessionKey: Cookie.get('rwt-session-key'),
         username: Cookie.get('rwt-session-username')
       })
@@ -389,6 +392,17 @@ class SingleSong extends Component {
                       checked={this.state.fields.isHidden}
                       onChange={this._handleIsHiddenChange}
                     />
+
+                  <div className="upload-field moments" key='moments'>
+                      <p className="field-title">Moments</p>
+                      <input
+                        value={this.state.fields.moments}
+                        onChange={this._handleInputChange('moments')}
+                        type={'text'}
+                        placeholder=""
+                        className={'upload-song-input'}
+                      />
+                    </div>
                   </div>
 
                   <div className="right-content">
