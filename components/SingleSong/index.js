@@ -309,7 +309,7 @@ class SingleSong extends Component {
                             <Select
                               value={this.state.fields.selectedCurator}
                               onChange={this._handleSelectedCuratorChange}
-                              options={this.state.curators}
+                              options={this.state.fields.curators}
                             />
 
                             <p className="field-title">Subgenres</p>

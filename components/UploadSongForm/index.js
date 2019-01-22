@@ -135,8 +135,6 @@ class UploadSongForm extends Component {
   _handleSubmit = (event) => {
     event.preventDefault();
 
-    const description = this.state.fields.description.replace(/\r?\n/g, '<br />')
-
     const requestParams = {
       method: "POST",
       headers: {
@@ -145,7 +143,7 @@ class UploadSongForm extends Component {
       body: JSON.stringify({
         name: this.state.fields.songTitle,
         artistName: this.state.fields.artistName,
-        description: description,
+        description: this.state.fields.description,
         imageUrl: this.state.s3ImageUrl,
         curatorId: this.state.fields.selectedCurator.value,
         spotify: {
