@@ -241,176 +241,186 @@ class UploadSongForm extends Component {
     const isLoaded = subgenres.length > 0
 
     return (
-      <div className={'song-container'}>
-        <form onSubmit={this._handleSubmit}>
-          <div className={'upload-song-form'}>
-            {
+        <div className={'song-container'}>
+          <form onSubmit={this._handleSubmit}>
+            <div className={'upload-song-form'}>
               <Fragment>
-                    <div className={'left-content'}>
-                        <div className="upload-field song-name" key='songTitle'>
-                        <p className="field-title">Song Name</p>
-                          <input
-                            value={this.state.fields.songTitle}
-                            onChange={this._handleInputChange('songTitle')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
 
-                        <div className="upload-field artist-title" key='artistName'>
-                        <p className="field-title">Artist Name</p>
-                          <input
-                            value={this.state.fields.artistName}
-                            onChange={this._handleInputChange('artistName')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
+                <div className={'left-content'}>
 
-                        <div className="upload-field song-description" key='description'>
-                        <p className="field-title">Write Up</p>
-                          <textarea
-                            value={this.state.fields.description}
-                            onChange={this._handleInputChange('description')}
-                            type={'text-area'}
-                            placeholder="..."
-                            col="20"
-                            className={'upload-song-text-area'}
-                            wrap="hard"
-                          />
-                        </div>
+                  <div className="upload-field song-name" key='songTitle'>
+                    <p className="field-title">Song Name</p>
+                    <input
+                      value={this.state.fields.songTitle}
+                      onChange={this._handleInputChange('songTitle')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                        <div className="upload-field spotify-link" key='spotifyLink'>
-                        <p className="field-title">Spotify Link</p>
-                          <input
-                            value={this.state.fields.spotifyLink}
-                            onChange={this._handleInputChange('spotifyLink')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
+                  <div className="upload-field artist-title" key='artistName'>
+                    <p className="field-title">Artist Name</p>
+                    <input
+                      value={this.state.fields.artistName}
+                      onChange={this._handleInputChange('artistName')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                        <div className="upload-field soundcloud-link" key='soundcloudLink'>
-                        <p className="field-title">SoundCloud Link</p>
-                          <input
-                            value={this.state.fields.soundcloudLink}
-                            onChange={this._handleInputChange('soundcloudLink')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
-                        <div className="upload-field soundcloud-track-id" key='soundcloudTrackId'>
-                        <p className="field-title">SoundCloud Track id</p>
-                          <input
-                            value={this.state.fields.soundcloudTrackId}
-                            onChange={this._handleInputChange('soundcloudTrackId')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
+                  <div className="upload-field song-description" key='description'>
+                    <p className="field-title">Write Up</p>
+                    <textarea
+                      value={this.state.fields.description}
+                      onChange={this._handleInputChange('description')}
+                      type={'text-area'}
+                      placeholder="..."
+                      col="20"
+                      className={'upload-song-text-area'}
+                      wrap="hard"
+                    />
+                  </div>
 
+                  <div className="upload-field spotify-link" key='spotifyLink'>
+                    <p className="field-title">Spotify Link</p>
+                    <input
+                      value={this.state.fields.spotifyLink}
+                      onChange={this._handleInputChange('spotifyLink')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                        <div className="upload-field youtube-link" key='youtubeLink'>
-                        <p className="field-title">Youtube Link</p>
-                          <input
-                            value={this.state.fieldsyoutubeLink}
-                            onChange={this._handleInputChange('youtubeLink')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
-                        <div className="upload-field youtube-track-id" key='youtubeTrackId'>
-                        <p className="field-title">Youtube Track id</p>
-                          <input
-                            value={this.state.fields.youtubeTrackId}
-                            onChange={this._handleInputChange('youtubeTrackId')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
-                        <div className="upload-field bpm" key='bpm'>
-                        <p className="field-title">BPM</p>
-                          <input
-                            value={this.state.fields.bpm}
-                            onChange={this._handleInputChange('bpm')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
+                  <div className="upload-field soundcloud-link" key='soundcloudLink'>
+                    <p className="field-title">SoundCloud Link</p>
+                    <input
+                      value={this.state.fields.soundcloudLink}
+                      onChange={this._handleInputChange('soundcloudLink')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                        <div className="upload-field artist-location" key='artistLocation'>
-                        <p className="field-title">Artist Location</p>
-                          <input
-                            value={this.state.fields.artistLocation}
-                            onChange={this._handleInputChange('artistLocation')}
-                            type={'text'}
-                            placeholder=""
-                            className={'upload-song-input'}
-                          />
-                        </div>
-                      </div>
+                  <div className="upload-field soundcloud-track-id" key='soundcloudTrackId'>
+                    <p className="field-title">SoundCloud Track id</p>
+                    <input
+                      value={this.state.fields.soundcloudTrackId}
+                      onChange={this._handleInputChange('soundcloudTrackId')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                      <div className={'right-content'}>
+                  <div className="upload-field youtube-link" key='youtubeLink'>
+                    <p className="field-title">Youtube Link</p>
+                    <input
+                      value={this.state.fieldsyoutubeLink}
+                      onChange={this._handleInputChange('youtubeLink')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                        <div className="upload-field curator-id" key='curator-id'>
-                          <p className="field-title">Curator</p>
-                          <Select
-                            value={this.state.fields.selectedCurator}
-                            onChange={this._handleSelectedCuratorChange}
-                            options={this.state.curators}
-                          />
-                        </div>
+                  <div className="upload-field youtube-track-id" key='youtubeTrackId'>
+                    <p className="field-title">Youtube Track id</p>
+                    <input
+                      value={this.state.fields.youtubeTrackId}
+                      onChange={this._handleInputChange('youtubeTrackId')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                        <p className="field-title">Subgenres</p>
-                        <Select
-                          value={this.state.selectedSubgenres}
-                          isMulti={true}
-                          onChange={this._handleSelectedSubgenresChange}
-                          options={this.state.subgenres}
-                        />
+                  <div className="upload-field bpm" key='bpm'>
+                    <p className="field-title">BPM</p>
+                    <input
+                      value={this.state.fields.bpm}
+                      onChange={this._handleInputChange('bpm')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
 
-                        <div className="upload-field createdAt">
-                        <p className="field-title">Published at</p>
-                          <Datetime
-                          value={this.state.fields.createdAt}
-                          onChange={this._handleDateInputChange()}
-                          />
-                        </div>
+                  <div className="upload-field artist-location" key='artistLocation'>
+                    <p className="field-title">Artist Location</p>
+                    <input
+                      value={this.state.fields.artistLocation}
+                      onChange={this._handleInputChange('artistLocation')}
+                      type={'text'}
+                      placeholder=""
+                      className={'upload-song-input'}
+                    />
+                  </div>
+                </div>
 
-                        <div className="upload-field song" key='song'>
-                          <p className="field-title">Upload Song</p>
-                          <input label='upload file' type='file' onChange={this.handleSongFileUpload} />
-                        </div>
+                <div className={'right-content'}>
 
-                        <div className="upload-field image" key='image'>
-                          <img className="song-img-preview" src={this.state.s3ImageUrl} />
-                          <p className="field-title">Upload Image</p>
-                          <input label='upload file' type='file' onChange={this.handleImageFileUpload} />
-                        </div>
+                  <div className="upload-field curator-id" key='curator-id'>
+                    <p className="field-title">Curator</p>
+                    <Select
+                      value={this.state.fields.selectedCurator}
+                      onChange={this._handleSelectedCuratorChange}
+                      options={this.state.curators}
+                    />
+                  </div>
 
-                        <input
-                          type={'submit'}
-                          value={'submit'}
-                          className={'uploadForm__submit-button'}
-                        />
+                  <p className="field-title">Subgenres</p>
+                  <Select
+                    value={this.state.selectedSubgenres}
+                    isMulti={true}
+                    onChange={this._handleSelectedSubgenresChange}
+                    options={this.state.subgenres}
+                  />
 
-                        <br />
-                        {this.state.error && <p className='error'>{this.state.error}</p>}
-                        {this.state.message && <p className='message'>{this.state.message}</p>}
-                      </div>
+                  <div className="upload-field createdAt">
+                    <p className="field-title">Published at</p>
+                    <Datetime
+                      value={this.state.fields.createdAt}
+                      onChange={this._handleDateInputChange()}
+                    />
+                  </div>
+
+                  <div className="upload-field song" key='song'>
+                    <p className="field-title">Upload Song</p>
+                    <input
+                      label='upload file'
+                      type='file'
+                      onChange={this.handleSongFileUpload}
+                    />
+                  </div>
+
+                  <div className="upload-field image" key='image'>
+                    <img className="song-img-preview" src={this.state.s3ImageUrl} />
+                    <p className="field-title">Upload Image</p>
+                    <input
+                      label='upload file'
+                      type='file'
+                      onChange={this.handleImageFileUpload}
+                    />
+                  </div>
+
+                  <input
+                    type={'submit'}
+                    value={'submit'}
+                    className={'uploadForm__submit-button'}
+                  />
+
+                  <br />
+                  {this.state.error && <p className='error'>{this.state.error}</p>}
+                  {this.state.message && <p className='message'>{this.state.message}</p>}
+                </div>
               </Fragment>
-            }
-          </div>
-        </form>
-      </div>
+            </div>
+          </form>
+        </div>
     )
   }
 }
