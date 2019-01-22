@@ -19,6 +19,7 @@ class SingleSong extends Component {
         artistName: song.artist_name,
         description: song.description,
         imageUrl: song.image_url,
+        songFileName: song.song_file_name,
         createdAt: song.created_at,
         spotifyLink: song.spotify_link,
         soundcloudLink: song.soundcloud_link,
@@ -320,12 +321,25 @@ class SingleSong extends Component {
                               options={this.state.subgenres}
                             />
 
+                            { /* TODO enable uploading new images / song files */ }
+
                             <div className="upload-field imageUrl" key='imageUrl'>
-                            <img className="song-img-preview" src={this.state.fields.imageUrl} />
-                            <p className="field-title">Image</p>
+                              <img className="song-img-preview" src={this.state.fields.imageUrl} />
+                              <p className="field-title">Image</p>
                               <input
                                 value={this.state.fields.imageUrl}
                                 onChange={this._handleInputChange('imageUrl')}
+                                type={'text'}
+                                placeholder=""
+                                className={'upload-song-input'}
+                              />
+                            </div>
+
+                            <div className="upload-field songFileName" key='songFileName'>
+                              <p className="field-title">Song File</p>
+                              <input
+                                value={this.state.fields.songFileName}
+                                onChange={this._handleInputChange('songFileName')}
                                 type={'text'}
                                 placeholder=""
                                 className={'upload-song-input'}
