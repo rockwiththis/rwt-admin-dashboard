@@ -385,15 +385,15 @@ class UploadSongForm extends Component {
                           />
                         </div>
 
+                        <div className="upload-field song" key='song'>
+                          <p className="field-title">Upload Song</p>
+                          <input label='upload file' type='file' onChange={this.handleSongFileUpload} />
+                        </div>
+
                         <div className="upload-field image" key='image'>
                           <img className="song-img-preview" src={this.state.s3ImageUrl} />
                           <p className="field-title">Upload Image</p>
                           <input label='upload file' type='file' onChange={this.handleImageFileUpload} />
-                        </div>
-
-                        <div className="upload-field song" key='song'>
-                          <p className="field-title">Upload Song</p>
-                          <input label='upload file' type='file' onChange={this.handleSongFileUpload} />
                         </div>
 
                         <input
