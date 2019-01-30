@@ -21,6 +21,7 @@ const defaultFields = {
   createdAt:'',
   artistLocation: '',
   selectedSubgenres: [],
+  selectedMoments: [],
   selectedCurator: {}
 }
 
@@ -34,96 +35,58 @@ class UploadSongForm extends Component {
     }
   }
 
-  _fetchAllSubgenres = async () => {
+  fetchState = async (apiPath, labelResolver = { name } => name) => {
     const requestParams = {
       headers: { "Content-Type": "application/json; charset=utf-8" }
     }
-    // TODO write a little library to standardize some of this stuff
-    // (especially the urls, as these will not work in production
-    fetch("http://localhost:9292/api/subgenres", requestParams)
+    // TODO fix url to work in production
+    fetch(`http://localhost:9292/api/${apiPath}`, requestParams)
       .then(response => response.json())
-      .then(subgenres => (
+      .then(parsedResponse => (
           this.setState({
-            subgenres: subgenres.map(({ id, name }) => ({ value: id, label: name }))
+            [apiPath]: parsedResponse.map(({ id, ...values }) => ({
+              value: id,
+              label: labelResolver(values)
+            })
           })
       ))
       .catch(error => {
         console.log(error);
         this.setState({ error: error });
-        return;
       });
   };
 
-  _fetchAllCurators = async () => {
-    const requestParams = {
-      headers: { "Content-Type": "application/json; charset=utf-8" }
-    }
-    // TODO write a little library to standardize some of this stuff
-    // (especially the urls, as these will not work in production
-    fetch("http://localhost:9292/api/curators", requestParams)
-      .then(response => response.json())
-      .then(curators => (
-          this.setState({
-            curators: curators.map(({ id, first_name, last_name }) => ({ value: id, label: `${first_name} ${last_name}` }))
-          })
-      ))
-      .catch(error => {
-        console.log(error);
-        this.setState({ error: error });
-        return;
-      });
-  };
+  fetchAllSubgenres = async () =>
+    this.fetchState('subgenres');
 
+  fetchAllCurators = async () =>
+    this.fetchState(
+      'curators',
+      { first_name, last_name } => `${first_name} ${last_name}`
+    );
+
+  fetchAllCurators = async () =>
+    this.fetchState('moments');
 
   componentDidMount() {
-    this._fetchAllSubgenres();
-    this._fetchAllCurators();
+    this.fetchAllSubgenres();
+    this.fetchAllCurators();
+    this.fetchAllMoments();
   }
 
-  // componentDidMount() {
-  //   const user = checkIsLoggedIn()
-  //   console.log('>>> user', user)
-  // }
-
-
-  _handleInputChange = inputName => event => {
-
+  handleFieldChange = fieldName => fieldValue =>
     this.setState({
       fields: {
         ...this.state.fields,
-        [inputName]: event.target.value
+        [fieldName]: fieldValue
       }
     });
-  }
 
-  _handleDateInputChange = inputName => event => {
-    console.log(event._d);
+  handleInputChange = inputName => event =>
+    handleFieldChange(inputName)(event.target.value);
 
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        createdAt: event._d
-      }
-    });
-  }
-
-  _handleSelectedSubgenresChange = selectedSubgenres => {
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        selectedSubgenres
-      }
-    });
-  }
-
-  _handleSelectedCuratorChange = selectedCurator => {
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        selectedCurator
-      }
-    });
-  }
+  handleDateInputChange = inputName => event => {
+    handleFieldChange(inputName)(event._d);
 
   refreshForm = message => {
     this.setState({
@@ -162,6 +125,7 @@ class UploadSongForm extends Component {
         createdAt: this.state.fields.createdAt,
         artistLocation: this.state.fields.artistLocation,
         subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
+        momentIds: this.state.fields.selectedMoments.map(({ value }) => value),
         sessionKey: Cookie.get('rwt-session-key'),
         username: Cookie.get('rwt-session-username')
       })
@@ -250,7 +214,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Song Name</p>
                     <input
                       value={this.state.fields.songTitle}
-                      onChange={this._handleInputChange('songTitle')}
+                      onChange={this.handleInputChange('songTitle')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -261,7 +225,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Artist Name</p>
                     <input
                       value={this.state.fields.artistName}
-                      onChange={this._handleInputChange('artistName')}
+                      onChange={this.handleInputChange('artistName')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -272,7 +236,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Write Up</p>
                     <textarea
                       value={this.state.fields.description}
-                      onChange={this._handleInputChange('description')}
+                      onChange={this.handleInputChange('description')}
                       type={'text-area'}
                       placeholder="..."
                       col="20"
@@ -285,7 +249,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Spotify Link</p>
                     <input
                       value={this.state.fields.spotifyLink}
-                      onChange={this._handleInputChange('spotifyLink')}
+                      onChange={this.handleInputChange('spotifyLink')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -296,7 +260,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">SoundCloud Link</p>
                     <input
                       value={this.state.fields.soundcloudLink}
-                      onChange={this._handleInputChange('soundcloudLink')}
+                      onChange={this.handleInputChange('soundcloudLink')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -307,7 +271,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">SoundCloud Track id</p>
                     <input
                       value={this.state.fields.soundcloudTrackId}
-                      onChange={this._handleInputChange('soundcloudTrackId')}
+                      onChange={this.handleInputChange('soundcloudTrackId')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -318,7 +282,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Youtube Link</p>
                     <input
                       value={this.state.fieldsyoutubeLink}
-                      onChange={this._handleInputChange('youtubeLink')}
+                      onChange={this.handleInputChange('youtubeLink')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -329,7 +293,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Youtube Track id</p>
                     <input
                       value={this.state.fields.youtubeTrackId}
-                      onChange={this._handleInputChange('youtubeTrackId')}
+                      onChange={this.handleInputChange('youtubeTrackId')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -340,7 +304,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">BPM</p>
                     <input
                       value={this.state.fields.bpm}
-                      onChange={this._handleInputChange('bpm')}
+                      onChange={this.handleInputChange('bpm')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -351,7 +315,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Artist Location</p>
                     <input
                       value={this.state.fields.artistLocation}
-                      onChange={this._handleInputChange('artistLocation')}
+                      onChange={this.handleInputChange('artistLocation')}
                       type={'text'}
                       placeholder=""
                       className={'upload-song-input'}
@@ -365,7 +329,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Curator</p>
                     <Select
                       value={this.state.fields.selectedCurator}
-                      onChange={this._handleSelectedCuratorChange}
+                      onChange={this.handleFieldChange('selectedCurator')}
                       options={this.state.curators}
                     />
                   </div>
@@ -374,15 +338,23 @@ class UploadSongForm extends Component {
                   <Select
                     value={this.state.selectedSubgenres}
                     isMulti={true}
-                    onChange={this._handleSelectedSubgenresChange}
+                    onChange={this.handleFieldChange('selectedSubgenres')}
                     options={this.state.subgenres}
+                  />
+
+                  <p className="field-title">Moments</p>
+                  <Select
+                    value={this.state.selectedMoments}
+                    isMulti={true}
+                    onChange={this.handleFieldChange('selectedMoments')}
+                    options={this.state.moments}
                   />
 
                   <div className="upload-field createdAt">
                     <p className="field-title">Published at</p>
                     <Datetime
                       value={this.state.fields.createdAt}
-                      onChange={this._handleDateInputChange()}
+                      onChange={this.handleDateInputChange()}
                     />
                   </div>
 
