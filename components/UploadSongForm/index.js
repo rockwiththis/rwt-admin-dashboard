@@ -6,6 +6,7 @@ import redirect from '../../lib/redirect.js'
 import Datetime from 'react-datetime'
 import Cookie from 'js-cookie'
 
+import fetchSelectState from '../../actions/fetchSelectState';
 
 const defaultFields = {
   songTitle: '',
@@ -35,38 +36,18 @@ class UploadSongForm extends Component {
     }
   }
 
-  fetchState = async (apiPath, labelResolver = { name } => name) => {
-    const requestParams = {
-      headers: { "Content-Type": "application/json; charset=utf-8" }
-    }
-    // TODO fix url to work in production
-    fetch(`http://localhost:9292/api/${apiPath}`, requestParams)
-      .then(response => response.json())
-      .then(parsedResponse => (
-          this.setState({
-            [apiPath]: parsedResponse.map(({ id, ...values }) => ({
-              value: id,
-              label: labelResolver(values)
-            })
-          })
-      ))
-      .catch(error => {
-        console.log(error);
-        this.setState({ error: error });
-      });
-  };
-
   fetchAllSubgenres = async () =>
-    this.fetchState('subgenres');
+    this.fetchSelectState('subgenres', this.setState);
 
   fetchAllCurators = async () =>
-    this.fetchState(
+    this.fetchSelectState(
       'curators',
+      this.setState,
       { first_name, last_name } => `${first_name} ${last_name}`
     );
 
   fetchAllCurators = async () =>
-    this.fetchState('moments');
+    this.fetchSelectState('moments', this.setState);
 
   componentDidMount() {
     this.fetchAllSubgenres();

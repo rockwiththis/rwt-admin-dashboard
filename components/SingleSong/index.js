@@ -5,7 +5,7 @@ import Loading from '../Loading'
 import Cookie from 'js-cookie'
 import Select from 'react-select';
 
-
+import fetchSelectState from '../../actions/fetchSelectState';
 
 class SingleSong extends Component {
   constructor(props) {
@@ -28,14 +28,13 @@ class SingleSong extends Component {
         youtubeTrackId: song.youtube_track_id,
         bpm: song.bpm,
         artistLocation: song.artist_location,
-        subgenreIds: song.sub_genres.map(({ id, name }) => ({ value: id, label: name })),
         selectedSubgenres: song.sub_genres.map(({ id, name }) => ({ value: id, label: name })),
+        selectedMoments: song.moments.map(({ id, name }) => ({ value: id, label: name })),
         selectedCurator: {
           value: song.curator_id,
           label: `${song.curator_first_name} ${song.curator_last_name}`
         },
         isHidden: song.hidden,
-        moments: song.moments
       },
       subgenres: [],
       curators: [],
@@ -43,93 +42,38 @@ class SingleSong extends Component {
     }
   }
 
+  fetchAllSubgenres = async () =>
+    this.fetchSelectState('subgenres', this.setState);
+
+  fetchAllCurators = async () =>
+    this.fetchSelectState(
+      'curators',
+      this.setState,
+      { first_name, last_name } => `${first_name} ${last_name}`
+    );
+
+  fetchAllCurators = async () =>
+    this.fetchSelectState('moments', this.setState);
+
   componentDidMount() {
-    this._fetchAllSubgenres();
-    this._fetchAllCurators();
-    console.log(this.state);
+    this.fetchAllSubgenres();
+    this.fetchAllCurators();
+    this.fetchAllMoments();
   }
 
-  _fetchAllSubgenres = async () => {
-    const requestParams = {
-      headers: { "Content-Type": "application/json; charset=utf-8" }
-    }
-    // TODO write a little library to standardize some of this stuff
-    // (especially the urls, as these will not work in production
-    fetch("http://localhost:9292/api/subgenres", requestParams)
-      .then(response => response.json())
-      .then(subgenres => (
-          this.setState({
-            subgenres: subgenres.map(({ id, name }) => ({ value: id, label: name }))
-          })
-      ))
-      .catch(error => {
-        console.log(error);
-        this.setState({ error: error });
-        return;
-      });
-  };
-
-  _fetchAllCurators = async () => {
-    const requestParams = {
-      headers: { "Content-Type": "application/json; charset=utf-8" }
-    }
-    // TODO write a little library to standardize some of this stuff
-    // (especially the urls, as these will not work in production
-    fetch("http://localhost:9292/api/curators", requestParams)
-      .then(response => response.json())
-      .then(curators => (
-          this.setState({
-            curators: curators.map(({ id, first_name, last_name }) => ({ value: id, label: `${first_name} ${last_name}` }))
-          })
-      ))
-      .catch(error => {
-        console.log(error);
-        this.setState({ error: error });
-        return;
-      });
-  };
-
-
-  _handleInputChange = inputName => event => {
+  handleFieldChange = fieldName => fieldValue =>
     this.setState({
       fields: {
         ...this.state.fields,
-        [inputName]: event.target.value
+        [fieldName]: fieldValue
       }
     });
-  }
 
-  _handleSelectedSubgenresChange = selectedSubgenres => {
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        selectedSubgenres
-      }
-    });
-  }
+  handleInputChange = inputName => event =>
+    handleFieldChange(inputName)(event.target.value);
 
-  _handleSelectedCuratorChange = selectedCurator => {
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        selectedCurator
-      }
-    });
-  }
-
-  _handleIsHiddenChange = event => this.setState({
-    fields: {
-      ...this.state.fields,
-      isHidden: event.target.checked
-    }
-  });
-
-  // refreshForm = message => {
-  //   this.setState({
-  //     message: message,
-  //     fields: { ...defaultFields }
-  //   });
-  // }
+  handleIsHiddenChange = event =>
+    handleFieldChange('isHidden')(event.target.checked);
 
   _handleSubmit = (event) => {
     event.preventDefault();
@@ -160,6 +104,7 @@ class SingleSong extends Component {
         bpm: this.state.fields.bpm,
         artistLocation: this.state.fields.artistLocation,
         subgenreIds: this.state.fields.selectedSubgenres.map(({ value }) => value),
+        momentIds: this.state.fields.selectedMoments.map(({ value }) => value),
         hidden: this.state.fields.isHidden,
         moments: this.state.fields.moments,
         sessionKey: Cookie.get('rwt-session-key'),
@@ -277,7 +222,7 @@ class SingleSong extends Component {
                     <p className="field-title">Song Name</p>
                       <input
                         value={this.state.fields.songTitle}
-                        onChange={this._handleInputChange('songTitle')}
+                        onChange={this.handleInputChange('songTitle')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -288,7 +233,7 @@ class SingleSong extends Component {
                     <p className="field-title">Artist Name</p>
                       <input
                         value={this.state.fields.artistName}
-                        onChange={this._handleInputChange('artistName')}
+                        onChange={this.handleInputChange('artistName')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -299,7 +244,7 @@ class SingleSong extends Component {
                     <p className="field-title">Write Up</p>
                       <textarea
                         value={this.state.fields.description}
-                        onChange={this._handleInputChange('description')}
+                        onChange={this.handleInputChange('description')}
                         type={'text-area'}
                         placeholder="..."
                         className={'upload-song-text-area'}
@@ -310,7 +255,7 @@ class SingleSong extends Component {
                     <p className="field-title">Spotify Link</p>
                       <input
                         value={this.state.fields.spotifyLink}
-                        onChange={this._handleInputChange('spotifyLink')}
+                        onChange={this.handleInputChange('spotifyLink')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -321,7 +266,7 @@ class SingleSong extends Component {
                     <p className="field-title">SoundCloud Link</p>
                       <input
                         value={this.state.fields.soundcloudLink}
-                        onChange={this._handleInputChange('soundcloudLink')}
+                        onChange={this.handleInputChange('soundcloudLink')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -332,7 +277,7 @@ class SingleSong extends Component {
                       <p className="field-title">SoundCloud Track id</p>
                       <input
                         value={this.state.fields.soundcloudTrackId}
-                        onChange={this._handleInputChange('soundcloudTrackId')}
+                        onChange={this.handleInputChange('soundcloudTrackId')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -344,7 +289,7 @@ class SingleSong extends Component {
                       <p className="field-title">Youtube Link</p>
                       <input
                         value={this.state.fields.youtubeLink}
-                        onChange={this._handleInputChange('youtubeLink')}
+                        onChange={this.handleInputChange('youtubeLink')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -355,7 +300,7 @@ class SingleSong extends Component {
                       <p className="field-title">Youtube Track id</p>
                       <input
                         value={this.state.fields.youtubeTrackId}
-                        onChange={this._handleInputChange('youtubeTrackId')}
+                        onChange={this.handleInputChange('youtubeTrackId')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -366,7 +311,7 @@ class SingleSong extends Component {
                       <p className="field-title">BPM</p>
                       <input
                         value={this.state.fields.bpm}
-                        onChange={this._handleInputChange('bpm')}
+                        onChange={this.handleInputChange('bpm')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -377,7 +322,7 @@ class SingleSong extends Component {
                       <p className="field-title">Artist Location</p>
                       <input
                         value={this.state.fields.artistLocation}
-                        onChange={this._handleInputChange('artistLocation')}
+                        onChange={this.handleInputChange('artistLocation')}
                         type={'text'}
                         placeholder=""
                         className={'upload-song-input'}
@@ -390,27 +335,15 @@ class SingleSong extends Component {
                       name="Is Hidden"
                       type="checkbox"
                       checked={this.state.fields.isHidden}
-                      onChange={this._handleIsHiddenChange}
+                      onChange={this.handleIsHiddenChange}
                     />
-
-                  <div className="upload-field moments" key='moments'>
-                      <p className="field-title">Moments</p>
-                      <input
-                        value={this.state.fields.moments}
-                        onChange={this._handleInputChange('moments')}
-                        type={'text'}
-                        placeholder=""
-                        className={'upload-song-input'}
-                      />
-                    </div>
-                  </div>
 
                   <div className="right-content">
 
                     <p className="field-title">Curator</p>
                     <Select
                       value={this.state.fields.selectedCurator}
-                      onChange={this._handleSelectedCuratorChange}
+                      onChange={this.handleFieldChange('selectedCurator')}
                       options={this.state.curators}
                     />
 
@@ -418,8 +351,16 @@ class SingleSong extends Component {
                     <Select
                       value={this.state.fields.selectedSubgenres}
                       isMulti={true}
-                      onChange={this._handleSelectedSubgenresChange}
+                      onChange={this.handleFieldChange('selectedSubgenres')}
                       options={this.state.subgenres}
+                    />
+
+                    <p className="field-title">Moments</p>
+                    <Select
+                      value={this.state.selectedMoments}
+                      isMulti={true}
+                      onChange={this.handleFieldChange('selectedMoments')}
+                      options={this.state.moments}
                     />
 
                     <div className="upload-field song" key='song'>
