@@ -6,7 +6,7 @@ import redirect from '../../lib/redirect.js'
 import Datetime from 'react-datetime'
 import Cookie from 'js-cookie'
 
-import fetchSelectState from '../../actions/fetchSelectState';
+import fetchSelectState from '../../actions/fetch-select-state';
 
 const defaultFields = {
   songTitle: '',
@@ -37,17 +37,16 @@ class UploadSongForm extends Component {
   }
 
   fetchAllSubgenres = async () =>
-    this.fetchSelectState('subgenres', this.setState);
+    fetchSelectState('subgenres').then(newState => this.setState(newState));
 
   fetchAllCurators = async () =>
-    this.fetchSelectState(
+    fetchSelectState(
       'curators',
-      this.setState,
-      { first_name, last_name } => `${first_name} ${last_name}`
-    );
+      ({ first_name, last_name }) => `${first_name} ${last_name}`
+    ).then(newState => this.setState(newState));
 
-  fetchAllCurators = async () =>
-    this.fetchSelectState('moments', this.setState);
+  fetchAllMoments = async () =>
+    fetchSelectState('moments').then(newState => this.setState(newState));
 
   componentDidMount() {
     this.fetchAllSubgenres();

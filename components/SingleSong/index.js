@@ -5,13 +5,14 @@ import Loading from '../Loading'
 import Cookie from 'js-cookie'
 import Select from 'react-select';
 
-import fetchSelectState from '../../actions/fetchSelectState';
+import fetchSelectState from '../../actions/fetch-select-state';
 
 class SingleSong extends Component {
   constructor(props) {
     super(props)
 
     const { song } = this.props
+    console.log('received song moments', song.moments);
     this.state = {
       fields: {
         songId: song.id,
@@ -38,22 +39,22 @@ class SingleSong extends Component {
       },
       subgenres: [],
       curators: [],
+      moments: [],
       file: null
     }
   }
 
-  fetchAllSubgenres = async () =>
-    this.fetchSelectState('subgenres', this.setState);
+  fetchAllSubgenres = () =>
+    fetchSelectState('subgenres').then(newState => this.setState(newState));
 
-  fetchAllCurators = async () =>
-    this.fetchSelectState(
+  fetchAllCurators = () =>
+    fetchSelectState(
       'curators',
-      this.setState,
-      { first_name, last_name } => `${first_name} ${last_name}`
-    );
+      ({ first_name, last_name }) => `${first_name} ${last_name}`
+    ).then(newState => this.setState(newState));
 
-  fetchAllCurators = async () =>
-    this.fetchSelectState('moments', this.setState);
+  fetchAllMoments = () =>
+    fetchSelectState('moments').then(newState => this.setState(newState));
 
   componentDidMount() {
     this.fetchAllSubgenres();
@@ -337,6 +338,7 @@ class SingleSong extends Component {
                       checked={this.state.fields.isHidden}
                       onChange={this.handleIsHiddenChange}
                     />
+                  </div>
 
                   <div className="right-content">
 
@@ -357,7 +359,7 @@ class SingleSong extends Component {
 
                     <p className="field-title">Moments</p>
                     <Select
-                      value={this.state.selectedMoments}
+                      value={this.state.fields.selectedMoments}
                       isMulti={true}
                       onChange={this.handleFieldChange('selectedMoments')}
                       options={this.state.moments}
