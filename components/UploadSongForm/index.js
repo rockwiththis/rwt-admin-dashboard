@@ -63,10 +63,10 @@ class UploadSongForm extends Component {
     });
 
   handleInputChange = inputName => event =>
-    handleFieldChange(inputName)(event.target.value);
+    this.handleFieldChange(inputName)(event.target.value);
 
-  handleDateInputChange = inputName => event => {
-    handleFieldChange(inputName)(event._d);
+  handleDateInputChange = inputName => event =>
+    this.handleFieldChange(inputName)(event._d);
 
   refreshForm = message => {
     this.setState({
@@ -334,7 +334,7 @@ class UploadSongForm extends Component {
                     <p className="field-title">Published at</p>
                     <Datetime
                       value={this.state.fields.createdAt}
-                      onChange={this.handleDateInputChange()}
+                      onChange={this.handleDateInputChange('createdAt')}
                     />
                   </div>
 
@@ -375,4 +375,4 @@ class UploadSongForm extends Component {
   }
 }
 
-export default UploadSongForm
+export default UploadSongForm;

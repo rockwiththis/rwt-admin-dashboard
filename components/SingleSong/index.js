@@ -71,10 +71,10 @@ class SingleSong extends Component {
     });
 
   handleInputChange = inputName => event =>
-    handleFieldChange(inputName)(event.target.value);
+    this.handleFieldChange(inputName)(event.target.value);
 
   handleIsHiddenChange = event =>
-    handleFieldChange('isHidden')(event.target.checked);
+    this.handleFieldChange('isHidden')(event.target.checked);
 
   _handleSubmit = (event) => {
     event.preventDefault();
